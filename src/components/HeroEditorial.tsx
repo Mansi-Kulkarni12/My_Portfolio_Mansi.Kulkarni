@@ -16,6 +16,7 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
   onOpenResume,
   onOpenRiskLens,
 }) => {
+  const [imgSrc, setImgSrc] = useState<string>(mansiProfile);
   const [activeChip, setActiveChip] = useState<'grc' | 'ai' | 'data'>('grc');
 
   const chipsData = {
@@ -199,10 +200,17 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
                 
                 <img
                   id="mansi-primary-portrait"
-                  src={mansiProfile}
+                  src={imgSrc}
                   alt="Mansi Kulkarni"
                   className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                   referrerPolicy="no-referrer"
+                  onError={() => {
+                    if (imgSrc === mansiProfile) {
+                      setImgSrc('/mansi-profile.jpg');
+                    } else if (imgSrc === '/mansi-profile.jpg') {
+                      setImgSrc('https://lh3.googleusercontent.com/d/1VHiOD7Y7KAEU2J7VKZtAZiPmZlAn7biW');
+                    }
+                  }}
                 />
 
                 {/* Subtle Editorial Gradient at bottom */}
