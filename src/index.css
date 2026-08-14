@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-cream-base: #FFF8F5;
+    --color-cream-surface: #FDF3EE;
+    --color-cream-card: #FFFFFF;
+    --color-blush-soft: #FCE4EC;
+    --color-blush-mid: #F7CDD9;
+    --color-rose-dusty: #EFAFC2;
+    --color-rose-accent: #E38FA9;
+    --color-coral-soft: #F6A5B2;
+    --color-raspberry: #C85B7B;
+    --color-cherry: #9F3D5C;
+    --color-burgundy-deep: #5C1D2E;
+    --color-chocolate-dark: #382629;
+    --color-text-primary: #382629;
+    --color-text-secondary: #6B4E54;
+    --color-text-muted: #9E7D84;
+    --color-border-blush: #F7CDD9;
+    --color-border-rose: #EFAFC2;
+  }
+
+  body {
+    background-color: #FFF8F5;
+    color: #382629;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom selection in blush pink and deep burgundy */
+  ::selection {
+    background-color: #F7CDD9;
+    color: #5C1D2E;
+  }
+}
+
+/* Custom Typography Helpers */
+.font-display {
+  font-family: 'Italiana', 'Cormorant Garamond', serif;
+}
+
+.font-serif-luxury {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
+.font-mono-tech {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Smooth custom scrollbars in blush & raspberry */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFF8F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E38FA9;
+  border-radius: 9999px;
+  border: 2px solid #FFF8F5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C85B7B;
+}
+
+/* Pinterest Paper Texture & Pattern Overlays */
+.bg-cream-canvas {
+  background-color: #FFF8F5;
+  background-image: 
+    radial-gradient(#EFAFC2 0.75px, transparent 0.75px),
+    radial-gradient(#F7CDD9 0.75px, #FFF8F5 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.bg-paper-grain {
+  background-image: radial-gradient(rgba(200, 91, 123, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.bg-blush-gradient {
+  background: linear-gradient(135deg, #FFF8F5 0%, #FCE4EC 50%, #F7CDD9 100%);
+}
+
+.bg-rose-card {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF8F5 100%);
+}
+
+/* Editorial typography outlines */
+.text-stroke-rose {
+  -webkit-text-stroke: 1.5px #EFAFC2;
+  color: transparent;
+}
+
+.text-stroke-burgundy {
+  -webkit-text-stroke: 1.5px #9F3D5C;
+  color: transparent;
+}
+
+.text-stroke-cream {
+  -webkit-text-stroke: 2px #FFF8F5;
+  color: transparent;
+}
+
+/* Washi Tape / Sticker Styles */
+.washi-tape-pink {
+  background: rgba(247, 205, 217, 0.85);
+  box-shadow: 0 1px 3px rgba(56, 38, 41, 0.08);
+  backdrop-filter: blur(2px);
+}
+
+.washi-tape-rose {
+  background: rgba(227, 143, 169, 0.85);
+  box-shadow: 0 1px 3px rgba(56, 38, 41, 0.08);
+  backdrop-filter: blur(2px);
+}
+
+/* Stamp Border Effect */
+.postage-stamp {
+  box-shadow: 0 4px 20px rgba(159, 61, 92, 0.08);
+  border: 4px solid #FFFFFF;
+  outline: 1px dashed #EFAFC2;
+  outline-offset: -3px;
+}
+
+/* Glassmorphism tuned strictly to Pinterest Blush & Warm Cream */
+.glass-panel-blush {
+  background: rgba(255, 248, 245, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(247, 205, 217, 0.8);
+  box-shadow: 0 10px 30px -10px rgba(200, 91, 123, 0.1);
+}
+
+.glass-panel-rose {
+  background: rgba(252, 228, 236, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(227, 143, 169, 0.6);
+  box-shadow: 0 12px 36px -12px rgba(159, 61, 92, 0.15);
+}
+
+/* Kinetic ticker animation */
+@keyframes ticker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-ticker {
+  animation: ticker 32s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* Floating animation */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(1.5deg); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(6px) rotate(-1.5deg); }
+}
+
+.animate-float-reverse {
+  animation: floatReverse 6s ease-in-out infinite;
+}
+
