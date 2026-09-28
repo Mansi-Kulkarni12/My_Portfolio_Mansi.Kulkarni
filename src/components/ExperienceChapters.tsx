@@ -144,7 +144,7 @@ export const ExperienceChapters: React.FC = () => {
               </p>
 
               <div className="flex flex-wrap gap-1.5 pt-2">
-                {['Tableau Dashboards', 'JSON Telemetry', 'Downtime Modeling', 'Excel Analytics', 'Pay Equity'].map((s, i) => (
+                {['Power BI Analytics', 'JSON Telemetry', 'Downtime Modeling', 'Excel Analytics', 'Pay Equity'].map((s, i) => (
                   <span
                     key={i}
                     className="px-2.5 py-1 rounded-full text-xs font-mono-tech bg-[#FFF8F5] text-[#9F3D5C] border border-[#F7CDD9]"
@@ -163,7 +163,7 @@ export const ExperienceChapters: React.FC = () => {
               <ul className="space-y-3">
                 {[
                   'Evaluated May 2021 JSON telemetry data from 4 factories and 9 machine types to diagnose failure frequency patterns.',
-                  'Engineered a 10-minute "Unhealthy" downtime metric and created an interactive Tableau dashboard pinpointing highest downtime locations.',
+                  'Engineered a 10-minute "Unhealthy" downtime metric and created an interactive executive dashboard pinpointing highest downtime locations.',
                   'Classified employee equality scores (-100 to +100) into 3 strategic categories using Microsoft Excel for corporate pay equity analysis.',
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#382629] leading-relaxed">

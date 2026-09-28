@@ -182,13 +182,6 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
         <div className="lg:col-span-5 flex justify-center order-first lg:order-last">
           <div className="relative w-full max-w-[340px] sm:max-w-[380px]">
             
-            {/* Top Washi Tape Graphic */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-30">
-              <Sticker variant="washi-pink" rotate={-2}>
-                <span>MANSI KULKARNI · AUTHENTIC PORTRAIT</span>
-              </Sticker>
-            </div>
-
             {/* Ambient Pink Backdrop Glow */}
             <div className="absolute -inset-3 bg-gradient-to-tr from-[#EFAFC2]/40 via-[#F7CDD9]/30 to-[#FCE4EC]/50 rounded-[2.5rem] blur-xl -z-10" />
 
@@ -229,18 +222,13 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
                     <span>Valerian Risk Solutions</span>
                   </div>
                 </div>
-
-                {/* Verified Seal Badge in corner */}
-                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#FFF8F5]/95 backdrop-blur-sm border border-[#EFAFC2] text-[10px] font-mono-tech font-bold text-[#9F3D5C] shadow-sm">
-                  VERIFIED · 2026
-                </div>
               </div>
 
               {/* Bottom Magazine-style Footer Bar */}
               <div className="mt-3 px-2 flex items-center justify-between text-xs text-[#6B4E54]">
-                <div className="flex items-center gap-1 text-[11px] font-mono-tech">
+                <div className="flex items-center gap-1.5 text-[11px] font-mono-tech">
                   <span className="text-[#C85B7B]">✦</span>
-                  <span>Hyderabad, IN</span>
+                  <span className="font-medium text-[#382629]">Hyderabad, IN</span>
                   <span>·</span>
                   <span className="font-semibold text-[#9F3D5C]">GRC / IRM</span>
                 </div>
@@ -252,19 +240,6 @@ export const HeroEditorial: React.FC<HeroEditorialProps> = ({
                   <span>Resume ↗</span>
                 </button>
               </div>
-            </div>
-
-            {/* Floating Heart / Star Stickers around photo */}
-            <div className="absolute -bottom-4 -left-3 z-20 animate-float-slow">
-              <Sticker variant="stamp" rotate={-8}>
-                <span>♡ ACTIVE CONSULTANT</span>
-              </Sticker>
-            </div>
-
-            <div className="absolute top-1/2 -right-5 z-20 hidden sm:block animate-float-reverse">
-              <Sticker variant="tag" rotate={10}>
-                <span>✦ 8.83 CGPA</span>
-              </Sticker>
             </div>
           </div>
         </div>

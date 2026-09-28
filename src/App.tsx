@@ -8,7 +8,6 @@ import { WhatIDoSection } from './components/WhatIDoSection';
 import { ExperienceChapters } from './components/ExperienceChapters';
 import { DriskifyFeature } from './components/DriskifyFeature';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
-import { GitHubCodebase } from './components/GitHubCodebase';
 import { SkillsMatrix } from './components/SkillsMatrix';
 import { EducationCertifications } from './components/EducationCertifications';
 import { ContactEditorial } from './components/ContactEditorial';
@@ -75,10 +74,7 @@ export default function App() {
         {/* 6. Featured Project Showcase (Live Apps & Analytics Portfolios) */}
         <ProjectsShowcase />
 
-        {/* 7. More of My Work // GitHub Repositories */}
-        <GitHubCodebase />
-
-        {/* 8. Four-Pillar Interactive Skills Matrix */}
+        {/* 7. Four-Pillar Interactive Skills Matrix */}
         <SkillsMatrix />
 
         {/* 9. Academic Foundation & Verified Certifications */}

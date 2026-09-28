@@ -105,10 +105,10 @@ export const EXPERIENCE_CHAPTERS: ExperienceChapter[] = [
     tagline: "Industrial telemetry analytics, failure frequency modeling, and enterprise pay equity classification.",
     description: [
       "Evaluated May 2021 JSON telemetry data sourced from 4 manufacturing factories and 9 machine types to diagnose systemic operational bottlenecks.",
-      "Engineered an authoritative 10-minute 'Unhealthy' downtime threshold metric and built an interactive Tableau dashboard to pinpoint highest downtime facilities and device failure frequencies.",
+      "Engineered an authoritative 10-minute 'Unhealthy' downtime threshold metric and built an interactive analytics dashboard to pinpoint highest downtime facilities and device failure frequencies.",
       "Classified employee equality scores across a range of (-100 to +100) into 3 strategic analytical tiers using Microsoft Excel to power organization-wide pay equity and diversity initiatives."
     ],
-    skillsUsed: ["Tableau", "JSON Telemetry Analysis", "Downtime Modeling", "Microsoft Excel", "Pay Equity Analysis", "Data Modeling"],
+    skillsUsed: ["Power BI", "JSON Telemetry Analysis", "Downtime Modeling", "Microsoft Excel", "Pay Equity Analysis", "Data Modeling"],
     deliverables: [
       {
         title: "Factory Telemetry Failure Dashboard",
@@ -212,6 +212,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     ],
     tools: ["PostgreSQL", "Power BI Desktop", "SQL", "DAX", "Data Modeling", "CSV Ingestion"],
     isFeatured: true,
+    githubUrl: "https://github.com/Mansi-Kulkarni12/CreditCard_Analysis_Report",
     metrics: [
       { label: "Relational Tables", value: "2" },
       { label: "Executive Dashboards", value: "2" },
@@ -231,6 +232,7 @@ export const PROJECTS_DATA: ProjectItem[] = [
     ],
     tools: ["SQL", "PostgreSQL", "Relational Database Design", "Query Optimization", "Performance Indexing"],
     isFeatured: true,
+    githubUrl: "https://github.com/Mansi-Kulkarni12/SQL_Projects",
     metrics: [
       { label: "Query Error Reduction", value: "20%" },
       { label: "Report Time Speedup", value: "30%" },
@@ -246,12 +248,13 @@ export const PROJECTS_DATA: ProjectItem[] = [
     highlights: [
       "Processed, cleaned, and modeled a multi-variable HR dataset to ensure 100% data integrity and eliminate reporting anomalies.",
       "Visualized 3 critical strategic pillars: workforce distribution, attrition probability analysis, and retention KPIs.",
-      "Constructed 3 interactive dashboards featuring 4 executive KPIs and granular department/tenure filters for faster leadership reporting."
+      "Constructed 1 comprehensive interactive executive dashboard featuring 4 core KPIs, attrition risk heatmaps, and granular department filters."
     ],
     tools: ["Power BI Desktop", "Microsoft Excel", "DAX", "Data Cleaning", "Data Modeling"],
     isFeatured: true,
+    githubUrl: "https://github.com/Mansi-Kulkarni12/HR-Analytics-Dashboard",
     metrics: [
-      { label: "Core Dashboards", value: "3" },
+      { label: "Core Dashboard", value: "1 Built" },
       { label: "Executive KPIs", value: "4" },
       { label: "Key Strategic Areas", value: "3" }
     ],
@@ -267,19 +270,20 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: "Control Mapping", featured: true },
       { name: "Policy Review", featured: true },
       { name: "Compliance Documentation", featured: true },
-      { name: "Audit Trail Analysis" },
       { name: "Regulatory Frameworks (ISO/SOC)" },
+      { name: "Risk Mitigation Governance" },
     ],
   },
   {
     title: "Platforms & AI Tools",
-    subtitle: "Enterprise platforms & modern AI systems",
+    subtitle: "Enterprise platforms & modern analytics suites",
     skills: [
       { name: "ServiceNow GRC / IRM", featured: true },
-      { name: "ServiceNow (CSA in Progress, CIS)", featured: true },
+      { name: "ServiceNow (CSA & CIS-DF Certified)", featured: true },
       { name: "Driskify AI Platform", featured: true },
-      { name: "Autonomous AI Risk Agents", featured: true },
-      { name: "Schema Categorization" },
+      { name: "Power BI Desktop", featured: true },
+      { name: "Microsoft Excel (Advanced Modeling)", featured: true },
+      { name: "Archer (RSA)" },
     ],
   },
   {
@@ -289,9 +293,9 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: "SQL (PostgreSQL)", featured: true },
       { name: "Power BI (DAX, Modeling)", featured: true },
       { name: "Microsoft Excel (Pivot, XLOOKUP)", featured: true },
-      { name: "Python (Basics, EDA)" },
-      { name: "Power Query" },
+      { name: "Power Query & ETL", featured: true },
       { name: "Data Cleaning & Optimization" },
+      { name: "Python (Basics, EDA)" },
     ],
   },
   {
@@ -329,31 +333,48 @@ export const EDUCATION_RECORDS = [
 
 export const CERTIFICATIONS: CertificationItem[] = [
   {
-    id: "deloitte-da",
-    title: "Data Analytics Job Simulation",
-    issuer: "Deloitte (Forage)",
-    date: "March 2026",
+    id: "servicenow-cis-df",
+    title: "Certified Implementation Specialist – Data Foundations (CMDB and CSDM) (CIS-DF)",
+    issuer: "ServiceNow",
+    date: "August 27, 2026",
     status: "Completed",
-    description: "Evaluated industrial telemetry JSON datasets, created 10-min machine downtime KPIs, and categorized pay equity metrics.",
-    credentialUrl: "https://www.theforage.com/",
-  },
-  {
-    id: "udemy-excel",
-    title: "Excel Data Analysis & Advanced Modeling",
-    issuer: "Udemy",
-    date: "2025",
-    status: "Completed",
-    description: "Advanced data manipulation, dynamic XLOOKUP formulas, pivot data structuring, and statistical modeling.",
-    credentialUrl: "https://www.udemy.com/",
+    description: "Successfully completed certification requirements for Certified Implementation Specialist – Data Foundations (CMDB and CSDM), signed by Jayney Howson, Senior Vice President, Global Learning and Development.",
+    credentialUrl: "https://nowlearning.servicenow.com/",
+    driveUrl: "https://drive.google.com/file/d/1Q2kd2RCnzVADGClcQ7xKH_2IhEEMOh6Q/view?usp=sharing",
+    verificationCode: "CIS-DF (CMDB and CSDM)",
   },
   {
     id: "servicenow-csa",
     title: "ServiceNow Certified System Administrator (CSA)",
     issuer: "ServiceNow",
-    date: "2026",
-    status: "In Progress",
-    description: "Deep hands-on configuration of ServiceNow core architecture, user administration, table schemas, workflow rules, and IRM modules.",
-    credentialUrl: "https://www.servicenow.com/",
+    date: "September 26, 2026",
+    status: "Completed",
+    description: "Successfully completed certification requirements for ServiceNow Certified System Administrator (CSA), signed by Jayney Howson, Senior Vice President, Global Learning and Development.",
+    credentialUrl: "https://nowlearning.servicenow.com/",
+    driveUrl: "https://drive.google.com/file/d/1ctYrKDoIZQ19p-hB00a_VRvnViy-AjvW/view?usp=sharing",
+    verificationCode: "CSA-Certified",
+  },
+  {
+    id: "deloitte-da",
+    title: "Data Analytics Job Simulation",
+    issuer: "Deloitte (Forage)",
+    date: "March 1, 2026",
+    status: "Completed",
+    description: "Completed practical tasks in Data analysis and Forensic technology, issued by Forage and signed by Tina McCreery, Chief Human Resources Officer, Deloitte.",
+    credentialUrl: "https://www.theforage.com/simulations/deloitte-au/data-analytics-1",
+    driveUrl: "https://drive.google.com/file/d/17w_ypvoCeYiEXvMnmbpkl6FGBEX9L-et/view?usp=sharing",
+    verificationCode: "Enrolment: zQdBuGeDQXLTbTy2H",
+  },
+  {
+    id: "udemy-excel",
+    title: "Excel Data Analysis for Professionals and Analysts",
+    issuer: "Udemy (Instructor: Muhammad Riaz Uddin)",
+    date: "February 28, 2026",
+    status: "Completed",
+    description: "Mastered data analysis techniques, formula modeling, pivot analytics, and statistical classification (2.5 total hours).",
+    credentialUrl: "https://ude.my/UC-90f5e518-042e-4617-99f8-a1f0ffa6cada",
+    driveUrl: "https://drive.google.com/file/d/1joNn-FRxbgiJbRml3-K_jKpyF0CZDlH3/view?usp=sharing",
+    verificationCode: "UC-90f5e518-042e-4617-99f8-a1f0ffa6cada",
   },
 ];
 

@@ -42,40 +42,48 @@ export const EducationCertifications: React.FC = () => {
         <Sticker variant="stamp">HYD · ACADEMICS</Sticker>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* Stacked Layout: Education First, then Certifications */}
+      <div className="space-y-16">
         
-        {/* Left: Education Column */}
-        <div className="lg:col-span-6 space-y-6">
-          <div className="flex items-center gap-2 text-xs font-mono-tech font-bold text-[#9F3D5C] uppercase tracking-wider">
-            <GraduationCap className="w-4 h-4 text-[#9F3D5C]" />
-            <span>ACADEMIC FOUNDATION</span>
+        {/* Block 1: Academic Foundation (2 items side-by-side in balanced grid) */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-mono-tech font-bold text-[#9F3D5C] uppercase tracking-wider">
+              <GraduationCap className="w-4 h-4 text-[#9F3D5C]" />
+              <span>ACADEMIC FOUNDATION</span>
+            </div>
+            <span className="text-[11px] font-mono-tech text-[#9E7D84]">
+              2 DEGREES RECORDED
+            </span>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {educationList.map((edu, idx) => (
               <div
                 key={idx}
-                className="p-6 rounded-3xl bg-[#FFFFFF] border-2 border-[#F7CDD9] shadow-sm hover:shadow-md transition-all space-y-3"
+                className="p-6 sm:p-8 rounded-3xl bg-[#FFFFFF] border-2 border-[#F7CDD9] shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
               >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono-tech font-bold text-[#9F3D5C]">
-                    {edu.period}
-                  </span>
-                  <Sticker variant="pink-badge">
-                    <span>{edu.score}</span>
-                  </Sticker>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono-tech font-bold text-[#9F3D5C]">
+                      {edu.period}
+                    </span>
+                    <Sticker variant="pink-badge">
+                      <span>{edu.score}</span>
+                    </Sticker>
+                  </div>
+
+                  <div>
+                    <h3 className="font-display text-xl sm:text-2xl font-bold text-[#382629]">
+                      {edu.degree}
+                    </h3>
+                    <p className="font-serif-luxury italic text-xs sm:text-sm text-[#9F3D5C] mt-1">
+                      {edu.institution} · {edu.location}
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <h3 className="font-display text-xl font-bold text-[#382629]">
-                    {edu.degree}
-                  </h3>
-                  <p className="font-serif-luxury italic text-xs sm:text-sm text-[#9F3D5C] mt-0.5">
-                    {edu.institution} · {edu.location}
-                  </p>
-                </div>
-
-                <p className="text-xs text-[#5C1D2E] leading-relaxed pt-1">
+                <p className="text-xs sm:text-sm text-[#5C1D2E] leading-relaxed pt-2 border-t border-[#F7CDD9]/60">
                   {edu.highlights}
                 </p>
               </div>
@@ -83,55 +91,80 @@ export const EducationCertifications: React.FC = () => {
           </div>
         </div>
 
-        {/* Right: Certifications Column */}
-        <div className="lg:col-span-6 space-y-6">
-          <div className="flex items-center gap-2 text-xs font-mono-tech font-bold text-[#9F3D5C] uppercase tracking-wider">
-            <Award className="w-4 h-4 text-[#9F3D5C]" />
-            <span>VERIFIED CERTIFICATIONS & SEALS</span>
+        {/* Block 2: Verified Certifications & Seals (4 items in balanced 2x2 grid) */}
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-xs font-mono-tech font-bold text-[#9F3D5C] uppercase tracking-wider">
+              <Award className="w-4 h-4 text-[#9F3D5C]" />
+              <span>VERIFIED CERTIFICATIONS & SEALS</span>
+            </div>
+            <span className="text-[11px] font-mono-tech text-[#9E7D84]">
+              4 CREDENTIALS VERIFIED
+            </span>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {CERTIFICATIONS.map((cert) => {
               const isCompleted = cert.status === 'Completed';
+              const targetUrl = cert.driveUrl || cert.credentialUrl;
 
               return (
                 <div
                   key={cert.id}
-                  className="p-6 rounded-3xl bg-[#FFFFFF] border-2 border-[#F7CDD9] hover:border-[#E38FA9] shadow-sm hover:shadow-md transition-all flex items-start justify-between gap-4"
+                  className="p-6 sm:p-7 rounded-3xl bg-[#FFFFFF] border-2 border-[#F7CDD9] hover:border-[#E38FA9] shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-4"
                 >
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono-tech text-[#9E7D84]">
-                        {cert.issuer} · {cert.date}
-                      </span>
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <span className="text-xs font-mono-tech text-[#9E7D84] block">
+                          {cert.issuer} · {cert.date}
+                        </span>
+                        <h4 className="font-display text-lg sm:text-xl font-bold text-[#382629] mt-1 leading-snug">
+                          {cert.title}
+                        </h4>
+                      </div>
+
+                      {/* Embossed Circular Seal Badge */}
+                      <div className="shrink-0 flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#FFF8F5] to-[#FCE4EC] border-2 border-[#EFAFC2] text-center shadow-xs">
+                        <Star className="w-3.5 h-3.5 text-[#9F3D5C]" />
+                        <span className="text-[8px] font-mono-tech font-bold text-[#9F3D5C] uppercase mt-0.5">
+                          {isCompleted ? 'VERIFIED' : 'IN PROGRESS'}
+                        </span>
+                      </div>
                     </div>
 
-                    <h4 className="font-display text-lg font-bold text-[#382629]">
-                      {cert.title}
-                    </h4>
-
-                    <p className="text-xs text-[#5C1D2E] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-[#5C1D2E] leading-relaxed">
                       {cert.description}
                     </p>
 
-                    {cert.credentialUrl && (
-                      <a
-                        href={cert.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-mono-tech text-[#9F3D5C] font-bold hover:underline pt-1"
-                      >
-                        <span>View Credential Record</span>
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
+                    {cert.verificationCode && (
+                      <div className="pt-1">
+                        <span className="inline-block px-3 py-1 rounded-full text-[10px] font-mono-tech bg-[#FFF8F5] text-[#9F3D5C] border border-[#F7CDD9] font-medium">
+                          ✦ {cert.verificationCode}
+                        </span>
+                      </div>
                     )}
                   </div>
 
-                  {/* Embossed Circular Seal Badge */}
-                  <div className="shrink-0 flex flex-col items-center justify-center w-16 h-16 rounded-full bg-gradient-to-tr from-[#FFF8F5] to-[#FCE4EC] border-2 border-[#EFAFC2] text-center shadow-xs">
-                    <Star className="w-3.5 h-3.5 text-[#9F3D5C]" />
-                    <span className="text-[8px] font-mono-tech font-bold text-[#9F3D5C] uppercase mt-0.5">
-                      {isCompleted ? 'VERIFIED' : 'IN PROGRESS'}
+                  <div className="pt-3 border-t border-[#F7CDD9]/70 flex items-center justify-between gap-2">
+                    {targetUrl ? (
+                      <a
+                        href={targetUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFF8F5] hover:bg-[#FCE4EC] border border-[#EFAFC2] text-xs font-mono-tech text-[#9F3D5C] hover:text-[#5C1D2E] font-bold shadow-2xs transition-all hover:scale-102 cursor-pointer"
+                      >
+                        <span>View Verified Certificate</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    ) : (
+                      <span className="text-xs font-mono-tech text-[#9E7D84]">
+                        Certificate on File
+                      </span>
+                    )}
+
+                    <span className="text-[10px] font-mono-tech text-[#9E7D84] uppercase font-semibold">
+                      VERIFIED ATTESTATION
                     </span>
                   </div>
                 </div>
@@ -139,6 +172,7 @@ export const EducationCertifications: React.FC = () => {
             })}
           </div>
         </div>
+
       </div>
     </section>
   );

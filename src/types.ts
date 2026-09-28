@@ -54,6 +54,8 @@ export interface CertificationItem {
   status: 'Completed' | 'In Progress';
   description: string;
   credentialUrl?: string;
+  driveUrl?: string;
+  verificationCode?: string;
 }
 
 export interface RiskScenario {

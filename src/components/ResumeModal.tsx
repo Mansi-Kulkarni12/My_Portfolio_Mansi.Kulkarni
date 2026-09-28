@@ -144,7 +144,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 </div>
                 <ul className="list-disc list-inside text-xs text-[#5C1D2E] space-y-1 mt-2">
                   <li>Analyzed telemetry data across 4 factories and 9 machine types to diagnose downtime.</li>
-                  <li>Created a Tableau dashboard highlighting highest-downtime locations with a 10-minute "Unhealthy" metric.</li>
+                  <li>Created an interactive analytics dashboard highlighting highest-downtime locations with a 10-minute "Unhealthy" metric.</li>
                   <li>Classified employee equality scores (-100 to +100) into 3 categories using Excel for pay equity analysis.</li>
                 </ul>
               </div>
@@ -157,10 +157,10 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               TECHNICAL & CONSULTING SKILLS
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#5C1D2E]">
-              <div><strong>GRC Platforms:</strong> ServiceNow GRC, ServiceNow IRM, Driskify AI, Archer, Onspring</div>
+              <div><strong>GRC Platforms:</strong> ServiceNow GRC, ServiceNow IRM, Driskify AI, Archer (RSA)</div>
               <div><strong>Databases & SQL:</strong> PostgreSQL, SQL Optimization, Relational Schemas</div>
-              <div><strong>Analytics & BI:</strong> Power BI Desktop, DAX Measures, Excel Modeling, Tableau</div>
-              <div><strong>Languages & Web:</strong> Python, TypeScript, React, HTML5/CSS3, Git/GitHub</div>
+              <div><strong>Analytics & BI:</strong> Power BI Desktop, DAX Measures, Microsoft Excel Modeling, Power Query</div>
+              <div><strong>Core Competencies:</strong> Data Analysis, Risk Assessment, Policy Review, Metric Engineering</div>
             </div>
           </div>
 
@@ -169,10 +169,59 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             <h2 className="text-sm font-mono-tech font-bold text-[#9F3D5C] uppercase tracking-wider mb-3 border-b border-[#F7CDD9] pb-1">
               CERTIFICATIONS
             </h2>
-            <ul className="list-disc list-inside text-xs text-[#5C1D2E] space-y-1">
-              <li>Deloitte Data Analytics Job Simulation — Forage (March 2026)</li>
-              <li>Udemy Excel Data Analysis Certification (2025/2026)</li>
-              <li>ServiceNow Certified System Administrator (CSA) — In Progress</li>
+            <ul className="list-disc list-inside text-xs text-[#5C1D2E] space-y-2">
+              <li className="flex items-center justify-between gap-2 flex-wrap">
+                <span>
+                  <strong>Certified Implementation Specialist – Data Foundations (CMDB and CSDM) (CIS-DF)</strong> — ServiceNow (Aug 2026)
+                </span>
+                <a
+                  href="https://drive.google.com/file/d/1Q2kd2RCnzVADGClcQ7xKH_2IhEEMOh6Q/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-mono-tech text-[#9F3D5C] hover:underline font-bold"
+                >
+                  [View Certificate ↗]
+                </a>
+              </li>
+              <li className="flex items-center justify-between gap-2 flex-wrap">
+                <span>
+                  <strong>ServiceNow Certified System Administrator (CSA)</strong> — ServiceNow (Sep 2026)
+                </span>
+                <a
+                  href="https://drive.google.com/file/d/1ctYrKDoIZQ19p-hB00a_VRvnViy-AjvW/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-mono-tech text-[#9F3D5C] hover:underline font-bold"
+                >
+                  [View Certificate ↗]
+                </a>
+              </li>
+              <li className="flex items-center justify-between gap-2 flex-wrap">
+                <span>
+                  <strong>Deloitte Data Analytics Job Simulation</strong> — Forage (March 2026)
+                </span>
+                <a
+                  href="https://drive.google.com/file/d/17w_ypvoCeYiEXvMnmbpkl6FGBEX9L-et/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-mono-tech text-[#9F3D5C] hover:underline font-bold"
+                >
+                  [View Certificate ↗]
+                </a>
+              </li>
+              <li className="flex items-center justify-between gap-2 flex-wrap">
+                <span>
+                  <strong>Excel Data Analysis for Professionals and Analysts</strong> — Udemy (Feb 2026)
+                </span>
+                <a
+                  href="https://drive.google.com/file/d/1joNn-FRxbgiJbRml3-K_jKpyF0CZDlH3/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-mono-tech text-[#9F3D5C] hover:underline font-bold"
+                >
+                  [View Certificate ↗]
+                </a>
+              </li>
             </ul>
           </div>
         </div>

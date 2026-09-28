@@ -152,8 +152,8 @@ export const DomainDiscover: React.FC<DomainDiscoverProps> = ({ onSelectCategory
                       Configuring tables, automated attestations, and compliance review cycles within ServiceNow.
                     </div>
                     <div className="p-3 rounded-xl bg-[#2d0911] border border-[#e91e63]/30">
-                      <span className="font-semibold text-[#FFF9F5] block mb-1">Certification Progress</span>
-                      ServiceNow CSA (Certified System Administrator) with hands-on CIS platform exposure.
+                      <span className="font-semibold text-[#FFF9F5] block mb-1">Earned Certifications</span>
+                      ServiceNow CSA & CIS-DF (CMDB and CSDM) Certified with hands-on platform expertise.
                     </div>
                   </>
                 )}
