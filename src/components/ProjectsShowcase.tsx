@@ -1,358 +1,185 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { ExternalLink, Github, Sparkles, Layers, ArrowUpRight, Check, X, Database, BarChart3, Globe, Coffee, Play, Activity } from 'lucide-react';
+import { ExternalLink, Github, ArrowUpRight, Activity, Database, BarChart3, Globe, Sparkles } from 'lucide-react';
 import { PROJECTS_DATA } from '../data/portfolioData';
-import { CAFE_MICO_ASSET, COFFEE_CRISPS_ASSET } from '../data/assetManager';
 import { ProjectItem } from '../types';
-import { Sticker, PinkFlower, PinkHeart, PinkStar } from './Stickers';
 import { HRDashboardSimulator, CreditCardSimulator, SQLBenchmarkSimulator } from './InteractiveProjectSimulators';
 
 export const ProjectsShowcase: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<'all' | 'web' | 'data' | 'sql'>('all');
-  const [activeProjectModal, setActiveProjectModal] = useState<ProjectItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'data' | 'sql' | 'web'>('all');
   const [expandedSimulator, setExpandedSimulator] = useState<string | null>(null);
 
   const filteredProjects = selectedCategory === 'all'
     ? PROJECTS_DATA
     : PROJECTS_DATA.filter((p) => p.category === selectedCategory);
 
-  return (
-    <section id="projects" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#F7CDD9]">
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <Sticker variant="washi-pink" rotate={-2}>
-              <span>✦ CHAPTER 03 // CURATED WORK</span>
-            </Sticker>
-            <Sticker variant="washi-rose" rotate={1}>
-              <span>INTERACTIVE LIVE MODELS</span>
-            </Sticker>
-          </div>
-          <h2 className="text-4xl sm:text-6xl font-display font-bold text-[#382629] tracking-tight">
-            Featured <span className="font-serif-luxury italic font-light text-[#C85B7B]">Projects</span>
-          </h2>
-        </div>
+  const categories = [
+    { label: 'All Projects', value: 'all' },
+    { label: 'Power BI & Data', value: 'data' },
+    { label: 'SQL Optimization', value: 'sql' },
+    { label: 'Live Websites', value: 'web' },
+  ];
 
-        {/* Filter Pills */}
-        <div className="flex flex-wrap gap-2">
-          {[
-            { label: 'ALL WORK', value: 'all' },
-            { label: 'LIVE WEB APPS', value: 'web' },
-            { label: 'POWER BI & DATA', value: 'data' },
-            { label: 'SQL OPTIMIZATION', value: 'sql' },
-          ].map((cat) => {
-            const isSelected = selectedCategory === cat.value;
-            return (
+  return (
+    <section id="projects" className="py-20 bg-white relative border-b border-slate-200/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+              <BarChart3 className="w-3.5 h-3.5" />
+              <span>Projects Portfolio</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Data Analytics, SQL & Web Projects
+            </h2>
+            <p className="text-base text-slate-600 leading-relaxed">
+              Explore my academic data projects built with PostgreSQL, SQL, Power BI, and DAX, alongside deployed responsive web applications.
+            </p>
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200/80">
+            {categories.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setSelectedCategory(cat.value as any)}
-                className={`px-4 py-2 rounded-full text-xs font-mono-tech font-bold transition-all cursor-pointer ${
-                  isSelected
-                    ? 'bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] shadow-xs'
-                    : 'bg-[#FFF8F5] text-[#6B4E54] hover:bg-[#FCE4EC] hover:text-[#382629] border border-[#F7CDD9]'
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
+                  selectedCategory === cat.value
+                    ? 'bg-white text-indigo-600 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {cat.label}
               </button>
-            );
-          })}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {filteredProjects.map((project) => {
-          const isLiveWeb = project.category === 'web';
-          const hasSimulator = ['hr-analytics-dashboard', 'credit-card-analytics', 'sql-hospital-bookstore'].includes(project.id);
-          const isSimulatorOpen = expandedSimulator === project.id;
-          const projectImage =
-            project.id === 'cafe-mico'
-              ? CAFE_MICO_ASSET
-              : project.id === 'coffee-crisps'
-              ? COFFEE_CRISPS_ASSET
-              : null;
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {filteredProjects.map((project) => {
+            const hasSimulator = ['hr-analytics-dashboard', 'credit-card-analytics', 'hospital-visit-analytics', 'bookstore-sales-analytics'].includes(project.id);
+            const isSimulatorOpen = expandedSimulator === project.id;
 
-          return (
-            <motion.div
-              key={project.id}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.25 }}
-              className="rounded-3xl bg-[#FFFFFF] border-2 border-[#F7CDD9] hover:border-[#E38FA9] p-6 sm:p-8 flex flex-col justify-between shadow-md hover:shadow-xl transition-all relative overflow-hidden group"
-            >
-              <div>
-                
-                {/* Card Top Metadata */}
-                <div className="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-[#F7CDD9]">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#9F3D5C]" />
-                    <span className="text-[10px] font-mono-tech font-bold uppercase tracking-wider text-[#9F3D5C]">
+            return (
+              <div
+                key={project.id}
+                className="bg-white rounded-3xl p-7 border border-slate-200/90 hover:border-indigo-300 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+              >
+                <div className="space-y-4">
+                  
+                  {/* Top Line: Project Type & Interactive Demo Button */}
+                  <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                    <span className="text-xs font-bold text-indigo-600 uppercase tracking-wide">
                       {project.type}
                     </span>
-                  </div>
-                  {isLiveWeb ? (
-                    <Sticker variant="tag">LIVE PRODUCTION ↗</Sticker>
-                  ) : hasSimulator ? (
-                    <button
-                      onClick={() => setExpandedSimulator(isSimulatorOpen ? null : project.id)}
-                      className="px-2.5 py-1 rounded-full bg-[#FFF0F4] hover:bg-[#FCE4EC] text-[#9F3D5C] border border-[#EFAFC2] text-[10px] font-mono-tech font-bold flex items-center gap-1 transition-all cursor-pointer"
-                    >
-                      <Activity className="w-3 h-3 text-[#C85B7B] animate-pulse" />
-                      <span>{isSimulatorOpen ? 'HIDE SIMULATOR' : 'INTERACTIVE DEMO'}</span>
-                    </button>
-                  ) : null}
-                </div>
 
-                {/* Project Visual Preview Frame */}
-                <div className="relative rounded-2xl overflow-hidden mb-6 border border-[#F7CDD9] bg-gradient-to-br from-[#FFF8F5] via-[#FCE4EC]/50 to-[#F7CDD9]/40 p-6 flex flex-col justify-between min-h-[160px] sm:min-h-[180px]">
-                  
-                  {/* If an authentic project image asset is present in src/assets */}
-                  {projectImage && (
-                    <div className="absolute inset-0 z-0">
-                      <img
-                        src={projectImage}
-                        alt={project.title}
-                        className="w-full h-full object-cover object-center opacity-25 group-hover:opacity-40 transition-opacity"
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#FFF8F5] via-[#FFF8F5]/80 to-transparent" />
-                    </div>
-                  )}
-
-                  {/* Decorative Browser Top Dots */}
-                  <div className="relative z-10 flex items-center justify-between pb-3 border-b border-[#EFAFC2]/40 text-xs text-[#9F3D5C] font-mono-tech">
-                    <div className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#EFAFC2]" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#F7CDD9]" />
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#FFF8F5]" />
-                    </div>
-                    <span>{project.id.toUpperCase()}</span>
+                    {hasSimulator && (
+                      <button
+                        onClick={() => setExpandedSimulator(isSimulatorOpen ? null : project.id)}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors cursor-pointer"
+                      >
+                        <Activity className="w-3.5 h-3.5 text-indigo-600" />
+                        <span>{isSimulatorOpen ? 'Close Demo' : 'Try Live Demo'}</span>
+                      </button>
+                    )}
                   </div>
 
-                  <div className="relative z-10 py-4">
-                    <h4 className="font-display text-2xl sm:text-3xl font-bold text-[#382629] group-hover:text-[#9F3D5C] transition-colors leading-tight">
+                  {/* Title & Description */}
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900">
                       {project.title}
-                    </h4>
-                    <p className="font-serif-luxury italic text-xs sm:text-sm text-[#6B4E54] mt-1">
+                    </h3>
+                    <p className="text-sm text-slate-600 leading-relaxed mt-2">
                       {project.description}
                     </p>
                   </div>
 
-                  {/* Visual Metric Badges if available */}
+                  {/* Metrics Row */}
                   {project.metrics && (
-                    <div className="relative z-10 grid grid-cols-3 gap-2 pt-2 border-t border-[#EFAFC2]/40">
+                    <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-50 border border-slate-200/70">
                       {project.metrics.map((m, i) => (
-                        <div key={i} className="text-center p-1.5 rounded-xl bg-[#FFFFFF]/80 border border-[#F7CDD9]">
-                          <div className="font-display text-base font-bold text-[#9F3D5C]">{m.value}</div>
-                          <div className="text-[9px] font-mono-tech text-[#9E7D84] uppercase">{m.label}</div>
+                        <div key={i} className="text-center">
+                          <div className="text-sm font-extrabold text-slate-900">{m.value}</div>
+                          <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">{m.label}</div>
                         </div>
                       ))}
                     </div>
                   )}
-                </div>
 
-                {/* Optional Expanded Live Interactive Simulator */}
-                <AnimatePresence>
+                  {/* Expandable Live Interactive Simulator */}
                   {isSimulatorOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="overflow-hidden mb-6"
-                    >
+                    <div className="p-4 rounded-2xl bg-slate-900 text-white border border-slate-800 space-y-3 animate-in fade-in duration-200">
+                      <div className="flex items-center justify-between text-xs text-indigo-300 font-bold border-b border-slate-800 pb-2">
+                        <span>Interactive Dashboard Preview</span>
+                        <span className="text-[10px] bg-indigo-500/20 px-2 py-0.5 rounded text-indigo-200">Live Simulator</span>
+                      </div>
                       {project.id === 'hr-analytics-dashboard' && <HRDashboardSimulator />}
                       {project.id === 'credit-card-analytics' && <CreditCardSimulator />}
-                      {project.id === 'sql-hospital-bookstore' && <SQLBenchmarkSimulator />}
-                    </motion.div>
+                      {(project.id === 'hospital-visit-analytics' || project.id === 'bookstore-sales-analytics') && <SQLBenchmarkSimulator />}
+                    </div>
                   )}
-                </AnimatePresence>
 
-                {/* Key Highlights */}
-                <ul className="space-y-2 mb-6">
-                  {project.highlights.map((h, i) => (
-                    <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-[#5C1D2E] leading-relaxed">
-                      <span className="text-[#C85B7B] font-bold mt-0.5">✦</span>
-                      <span>{h}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  {/* Highlights Bullet List */}
+                  <div className="space-y-1.5 pt-1">
+                    {project.highlights.map((h, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                        <span className="text-indigo-600 font-bold mt-0.5">•</span>
+                        <span>{h}</span>
+                      </div>
+                    ))}
+                  </div>
 
-              {/* Bottom Actions & Tech Tags */}
-              <div className="pt-4 border-t border-[#F7CDD9]">
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tools.map((tool, i) => (
-                    <span
-                      key={i}
-                      className="px-2.5 py-0.5 rounded-full text-[11px] font-mono-tech bg-[#FFF8F5] text-[#9F3D5C] border border-[#F7CDD9]"
-                    >
-                      {tool}
-                    </span>
-                  ))}
+                  {/* Tools / Tech Stack */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {project.tools.map((t, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 text-slate-700"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
                 </div>
 
-                <div className="flex items-center justify-between gap-3">
-                  <button
-                    onClick={() => setActiveProjectModal(project)}
-                    className="text-xs font-mono-tech text-[#6B4E54] hover:text-[#9F3D5C] font-semibold underline cursor-pointer"
-                  >
-                    View Project Breakdown
-                  </button>
+                {/* Bottom Card Actions */}
+                <div className="pt-5 mt-6 border-t border-slate-100 flex items-center justify-end gap-3">
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-sm hover:shadow transition-all"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>View on GitHub</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
+                    </a>
+                  )}
 
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-full bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] hover:from-[#822E49] hover:to-[#B04C6A] text-[#FFF8F5] text-xs font-mono-tech font-bold flex items-center gap-1.5 shadow-xs transition-all hover:scale-102 cursor-pointer"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm hover:shadow transition-all"
                     >
-                      <span>VIEW LIVE WEBSITE</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  )}
-
-                  {project.githubUrl && (
-                    <a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-full bg-[#382629] hover:bg-[#5C1D2E] text-[#FFF8F5] text-xs font-mono-tech font-bold flex items-center gap-1.5 shadow-xs transition-all hover:scale-102 cursor-pointer"
-                    >
-                      <Github className="w-3.5 h-3.5 text-[#F7CDD9]" />
-                      <span>VIEW ON GITHUB</span>
-                      <ArrowUpRight className="w-3 h-3 text-[#F7CDD9]" />
+                      <Globe className="w-4 h-4" />
+                      <span>View Live Website</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 opacity-70" />
                     </a>
                   )}
                 </div>
+
               </div>
-            </motion.div>
-          );
-        })}
+            );
+          })}
+        </div>
+
       </div>
-
-      {/* Interactive Project Detail Modal */}
-      <AnimatePresence>
-        {activeProjectModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-[#382629]/60 backdrop-blur-sm">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="bg-[#FFF8F5] text-[#382629] rounded-3xl p-6 sm:p-10 border-2 border-[#EFAFC2] shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto relative"
-            >
-              <button
-                onClick={() => setActiveProjectModal(null)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-[#FCE4EC] hover:bg-[#F7CDD9] text-[#9F3D5C] transition-colors cursor-pointer"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-6">
-                <div>
-                  <Sticker variant="washi-pink" rotate={-2}>
-                    <span>PROJECT BREAKDOWN & ARCHITECTURE</span>
-                  </Sticker>
-                  <h3 className="text-2xl sm:text-3xl font-display font-bold text-[#382629] mt-2">
-                    {activeProjectModal.title}
-                  </h3>
-                  <p className="font-serif-luxury italic text-sm text-[#9F3D5C] mt-0.5">
-                    {activeProjectModal.type}
-                  </p>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="text-xs font-mono-tech text-[#9E7D84] uppercase font-bold">
-                    Executive Summary:
-                  </div>
-                  <p className="text-xs sm:text-sm text-[#5C1D2E] leading-relaxed">
-                    {activeProjectModal.description}
-                  </p>
-                </div>
-
-                {/* Embedded Live Simulator inside Modal for Data/SQL projects */}
-                {['hr-analytics-dashboard', 'credit-card-analytics', 'sql-hospital-bookstore'].includes(activeProjectModal.id) && (
-                  <div className="space-y-2 pt-2">
-                    <div className="text-xs font-mono-tech text-[#9F3D5C] uppercase font-bold flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Live Analytical Simulator (Interactive DAX / SQL View):</span>
-                    </div>
-                    {activeProjectModal.id === 'hr-analytics-dashboard' && <HRDashboardSimulator />}
-                    {activeProjectModal.id === 'credit-card-analytics' && <CreditCardSimulator />}
-                    {activeProjectModal.id === 'sql-hospital-bookstore' && <SQLBenchmarkSimulator />}
-                  </div>
-                )}
-
-                <div className="space-y-2">
-                  <div className="text-xs font-mono-tech text-[#9E7D84] uppercase font-bold">
-                    Key Architectural Highlights:
-                  </div>
-                  <ul className="space-y-2">
-                    {activeProjectModal.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-[#382629]">
-                        <span className="text-[#9F3D5C] font-bold">✓</span>
-                        <span>{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <div className="text-xs font-mono-tech text-[#9E7D84] uppercase font-bold mb-2">
-                    Tooling & Technologies:
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {activeProjectModal.tools.map((tool, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 rounded-full text-xs font-mono-tech bg-[#FFFFFF] text-[#9F3D5C] border border-[#EFAFC2]"
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-[#F7CDD9] flex flex-wrap items-center justify-between gap-3">
-                  <button
-                    onClick={() => setActiveProjectModal(null)}
-                    className="px-4 py-2 rounded-full bg-[#FFF8F5] border border-[#F7CDD9] text-xs font-mono-tech text-[#6B4E54] hover:bg-[#FCE4EC] cursor-pointer"
-                  >
-                    Close
-                  </button>
-
-                  <div className="flex items-center gap-2">
-                    {activeProjectModal.githubUrl && (
-                      <a
-                        href={activeProjectModal.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2 rounded-full bg-[#382629] hover:bg-[#5C1D2E] text-[#FFF8F5] text-xs font-mono-tech font-bold flex items-center gap-1.5 shadow-sm"
-                      >
-                        <Github className="w-3.5 h-3.5 text-[#F7CDD9]" />
-                        <span>VIEW ON GITHUB ↗</span>
-                      </a>
-                    )}
-
-                    {activeProjectModal.liveUrl && (
-                      <a
-                        href={activeProjectModal.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2 rounded-full bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] text-xs font-mono-tech font-bold flex items-center gap-1.5 shadow-sm"
-                      >
-                        <span>OPEN LIVE DEPLOYMENT</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

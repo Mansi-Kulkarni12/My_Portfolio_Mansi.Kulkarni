@@ -4,9 +4,7 @@ import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
 import { HeroEditorial } from './components/HeroEditorial';
 import { AboutEditorial } from './components/AboutEditorial';
-import { WhatIDoSection } from './components/WhatIDoSection';
 import { ExperienceChapters } from './components/ExperienceChapters';
-import { DriskifyFeature } from './components/DriskifyFeature';
 import { ProjectsShowcase } from './components/ProjectsShowcase';
 import { SkillsMatrix } from './components/SkillsMatrix';
 import { EducationCertifications } from './components/EducationCertifications';
@@ -31,60 +29,45 @@ export default function App() {
     }
   };
 
-  const handleOpenRiskLens = () => {
-    const el = document.getElementById('driskify');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#FFF8F5] text-[#382629] relative selection:bg-[#F7CDD9] selection:text-[#5C1D2E]">
-      
-      {/* Delicate Custom Pink Star Cursor Follower */}
+    <div className="min-h-screen bg-slate-50 text-slate-900 relative selection:bg-indigo-600 selection:text-white">
+      {/* Precision Micro Follower Cursor */}
       <CustomCursor />
 
-      {/* Top Editorial Scroll Progress Indicator */}
+      {/* Top Hairline Scroll Indicator */}
       <ScrollProgress />
 
-      {/* Persistent Glassmorphism Navigation Bar */}
+      {/* Navigation Bar */}
       <Navbar onOpenResume={handleOpenResume} />
 
-      {/* Main Editorial Content Stream */}
+      {/* Main Content Stream */}
       <main>
-        {/* 1. Pinterest / Magazine Editorial Hero */}
+        {/* Welcoming Hero Section */}
         <HeroEditorial
           onExploreClick={handleExploreClick}
           onOpenResume={handleOpenResume}
-          onOpenRiskLens={handleOpenRiskLens}
         />
 
-        {/* 2. A Little About Me (4 Interactive Words: Technology, Risk, Compliance, Data) */}
+        {/* About Me: 3 Core Pillars & Key Highlights */}
         <AboutEditorial />
 
-        {/* 3. Four Core Practices ("What I Do") */}
-        <WhatIDoSection />
-
-        {/* 4. Consulting Experience Chapters (Valerian Risk Solutions & Deloitte) */}
+        {/* Work Experience: Valerian (ServiceNow GRC/IRM) & Deloitte */}
         <ExperienceChapters />
 
-        {/* 5. Driskify AI Pipeline Showcase (Data → Mapping → AI Agents → Control Compliance → Risk Insights) */}
-        <DriskifyFeature />
-
-        {/* 6. Featured Project Showcase (Live Apps & Analytics Portfolios) */}
+        {/* Featured Projects: PostgreSQL, SQL, Power BI & Web */}
         <ProjectsShowcase />
 
-        {/* 7. Four-Pillar Interactive Skills Matrix */}
+        {/* Skills & Tools: ServiceNow, Data Analytics, BI, Consulting */}
         <SkillsMatrix />
 
-        {/* 9. Academic Foundation & Verified Certifications */}
+        {/* Education & Verified Certifications with Direct Drive Links */}
         <EducationCertifications />
 
-        {/* 10. Let's Connect ♡ Editorial Closing */}
+        {/* Contact Me & Message Form */}
         <ContactEditorial onOpenResume={handleOpenResume} />
       </main>
 
-      {/* Verified Resume Modal */}
+      {/* Printable Full Resume Modal */}
       <ResumeModal
         isOpen={isResumeOpen}
         onClose={handleCloseResume}

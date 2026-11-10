@@ -7,7 +7,6 @@ export const CustomCursor: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Only enable on non-touch devices
     if (window.matchMedia('(pointer: coarse)').matches) {
       return;
     }
@@ -51,29 +50,23 @@ export const CustomCursor: React.FC = () => {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
-      {/* Outer subtle follower ring */}
       <motion.div
-        className="absolute rounded-full border border-[#E38FA9]/60 pointer-events-none"
+        className="absolute rounded-full border border-indigo-500/40 pointer-events-none"
         animate={{
           x: position.x - (isHovering ? 18 : 12),
           y: position.y - (isHovering ? 18 : 12),
           width: isHovering ? 36 : 24,
           height: isHovering ? 36 : 24,
-          scale: isHovering ? 1.2 : 1,
-          backgroundColor: isHovering ? 'rgba(252, 228, 236, 0.4)' : 'rgba(252, 228, 236, 0.1)',
+          borderColor: isHovering ? '#4F46E5' : 'rgba(99, 102, 241, 0.4)',
+          backgroundColor: isHovering ? 'rgba(99, 102, 241, 0.08)' : 'transparent',
         }}
-        transition={{ type: 'spring', damping: 25, stiffness: 350, mass: 0.4 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 350, mass: 0.2 }}
       />
-
-      {/* Tiny inner decorative star/dot */}
-      <motion.div
-        className="absolute w-1.5 h-1.5 rounded-full bg-[#9F3D5C] pointer-events-none"
-        animate={{
-          x: position.x - 3,
-          y: position.y - 3,
-          scale: isHovering ? 0 : 1,
+      <div
+        className="absolute w-1.5 h-1.5 rounded-full bg-indigo-600 pointer-events-none"
+        style={{
+          transform: `translate3d(${position.x - 3}px, ${position.y - 3}px, 0)`,
         }}
-        transition={{ type: 'spring', damping: 30, stiffness: 450, mass: 0.1 }}
       />
     </div>
   );

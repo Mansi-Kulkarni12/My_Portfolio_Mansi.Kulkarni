@@ -1,180 +1,163 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { Briefcase, Building2, MapPin, Calendar, CheckCircle2, ArrowUpRight, Sparkles } from 'lucide-react';
-import { EXPERIENCE_CHAPTERS } from '../data/portfolioData';
-import { Sticker, PinkFlower, PinkHeart, PinkStar } from './Stickers';
+import React, { useState } from 'react';
+import { EXPERIENCE_ITEMS } from '../data/portfolioData';
+import { Briefcase, Calendar, MapPin, CheckCircle2, Sparkles, Building2, ChevronRight } from 'lucide-react';
 
 export const ExperienceChapters: React.FC = () => {
+  const [selectedExp, setSelectedExp] = useState<string>('valerian');
+
+  const current = EXPERIENCE_ITEMS.find((item) => item.id === selectedExp) || EXPERIENCE_ITEMS[0];
+
   return (
-    <section id="experience" className="py-20 sm:py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 pb-6 border-b border-[#F7CDD9]">
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <Sticker variant="washi-pink" rotate={-2}>
-              <span>✦ CHAPTER 02 // PROFESSIONAL TRACK RECORD</span>
-            </Sticker>
-          </div>
-          <h2 className="text-4xl sm:text-6xl font-display font-bold text-[#382629] tracking-tight">
-            Consulting <span className="font-serif-luxury italic font-light text-[#C85B7B]">Experience</span>
-          </h2>
-        </div>
-        <Sticker variant="stamp">SOURCE: VERIFIED RESUME</Sticker>
-      </div>
-
-      {/* Editorial Experience Panels */}
-      <div className="space-y-10">
+    <section id="experience" className="py-20 bg-slate-50 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
-        {/* Panel 1: Current Valerian Risk Solutions */}
-        <div className="rounded-3xl bg-[#FFFFFF] border-2 border-[#EFAFC2] p-6 sm:p-10 shadow-xl relative overflow-hidden">
-          
-          {/* Top Stamp / Currently Badge */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-[#F7CDD9]">
-            <div className="flex items-center gap-3">
-              <span className="w-3 h-3 rounded-full bg-[#9F3D5C] animate-ping" />
-              <Sticker variant="ribbon">
-                <span>✦ CURRENTLY ENGAGED</span>
-              </Sticker>
-            </div>
-            <div className="flex items-center gap-3 text-xs font-mono-tech text-[#6B4E54]">
-              <span className="flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5 text-[#9F3D5C]" />
-                <span>Hyderabad · Hybrid</span>
-              </span>
-              <span>•</span>
-              <span className="font-bold text-[#9F3D5C]">Jun 2026 — Present</span>
-            </div>
+        {/* Section Header */}
+        <div className="max-w-3xl space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+            <span>Work Experience</span>
           </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left: Role & Company Overview */}
-            <div className="lg:col-span-5 space-y-4">
-              <div>
-                <span className="text-xs font-mono-tech text-[#9E7D84] uppercase tracking-wider font-bold">
-                  CHAPTER 01 // ENTERPRISE GRC & AI
-                </span>
-                <h3 className="text-2xl sm:text-3xl font-display font-bold text-[#382629] mt-1">
-                  Valerian Risk Solutions
-                </h3>
-                <p className="text-sm sm:text-base font-serif-luxury italic text-[#9F3D5C] font-semibold">
-                  Technology Consultant — ServiceNow GRC & IRM
-                </p>
-              </div>
-
-              <p className="text-xs sm:text-sm text-[#5C1D2E] leading-relaxed">
-                Architecting enterprise GRC solutions and orchestrating Driskify AI agents for automated risk governance, policy compliance review, and stakeholder advisory.
-              </p>
-
-              {/* Skills Used Chips */}
-              <div className="pt-2">
-                <div className="text-[10px] font-mono-tech text-[#9E7D84] uppercase font-bold mb-2">
-                  Applied Competencies:
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {['ServiceNow GRC', 'ServiceNow IRM', 'Driskify AI', 'Risk Assessment', 'Control Mapping', 'Policy Review', 'Stakeholder Management'].map((skill, i) => (
-                    <span
-                      key={i}
-                      className="px-2.5 py-1 rounded-full text-xs font-mono-tech bg-[#FFF8F5] text-[#9F3D5C] border border-[#F7CDD9] shadow-2xs"
-                    >
-                      ✦ {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Specific Deliverables & Bullet Points */}
-            <div className="lg:col-span-7 bg-[#FFF8F5] rounded-2xl p-6 border border-[#F7CDD9] space-y-4">
-              <div className="text-xs font-mono-tech text-[#9F3D5C] uppercase font-bold tracking-wider">
-                // RESPONSIBILITIES & DELIVERABLES:
-              </div>
-
-              <ul className="space-y-3">
-                {[
-                  'Support risk and compliance solution implementation for client organizations, collaborating directly with executive stakeholders to understand business requirements.',
-                  'Categorize client enterprise data on the Driskify AI platform, mapping columns and deploying specialized AI agents to evaluate control compliance and generate risk insights.',
-                  'Conduct systematic policy compliance reviews, aligning client procedures with ISO, SOC, and NIST framework baselines.',
-                  'Facilitate cross-functional coordination, translating technical ServiceNow IRM configurations into executive-ready risk posture summaries.',
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#382629] leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-[#C85B7B] shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Consulting & Analytics Experience
+          </h2>
+          <p className="text-base text-slate-600 leading-relaxed">
+            Hands-on enterprise delivery spanning ServiceNow GRC/IRM workflow configuration, policy lifecycle automation, and industrial data analytics at Deloitte.
+          </p>
         </div>
 
-        {/* Panel 2: Deloitte Virtual Job Simulation */}
-        <div className="rounded-3xl bg-[#FFFFFF] border-2 border-[#F7CDD9] p-6 sm:p-10 shadow-md relative overflow-hidden">
+        {/* Experience Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-[#F7CDD9]">
-            <div className="flex items-center gap-3">
-              <Sticker variant="tag">
-                <span>✦ FORAGE SIMULATION</span>
-              </Sticker>
-              <Sticker variant="washi-pink" rotate={2}>
-                <span>DATA & TELEMETRY</span>
-              </Sticker>
-            </div>
-            <div className="text-xs font-mono-tech text-[#6B4E54]">
-              <span>Virtual Internship</span> · <span className="font-bold text-[#9F3D5C]">March 2026</span>
-            </div>
+          {/* Left Column: Organization Selector Cards */}
+          <div className="lg:col-span-5 space-y-4">
+            {EXPERIENCE_ITEMS.map((item) => {
+              const isActive = item.id === selectedExp;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setSelectedExp(item.id)}
+                  className={`w-full text-left p-6 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                    isActive
+                      ? 'bg-white border-indigo-500 shadow-lg ring-2 ring-indigo-500/20'
+                      : 'bg-white/60 hover:bg-white border-slate-200 hover:border-slate-300 shadow-xs'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-2.5">
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shadow-xs ${
+                        item.id === 'valerian' ? 'bg-indigo-600' : 'bg-emerald-600'
+                      }`}>
+                        <Building2 className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-extrabold text-slate-900 text-base">
+                          {item.company}
+                        </h3>
+                        <p className="text-xs text-slate-500 font-medium">
+                          {item.role}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${
+                      isActive ? 'bg-indigo-50 text-indigo-700' : 'bg-slate-100 text-slate-600'
+                    }`}>
+                      {item.period}
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-slate-600 mt-2 line-clamp-2">
+                    {item.tagline}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-xs">
+                    <span className="text-slate-400 font-medium flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {item.location}
+                    </span>
+                    <span className={`font-bold flex items-center gap-0.5 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`}>
+                      <span>View Details</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-5 space-y-4">
-              <div>
-                <span className="text-xs font-mono-tech text-[#9E7D84] uppercase tracking-wider font-bold">
-                  CHAPTER 02 // INDUSTRIAL TELEMETRY
+          {/* Right Column: Detailed Experience Breakdown */}
+          <div className="lg:col-span-7 bg-white rounded-3xl p-7 sm:p-9 border border-slate-200 shadow-xl space-y-6">
+            
+            {/* Header of Active Role */}
+            <div className="border-b border-slate-100 pb-5 space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="text-xs font-bold text-indigo-600 uppercase tracking-wider">
+                  Featured Role Breakdown
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-display font-bold text-[#382629] mt-1">
-                  Deloitte
-                </h3>
-                <p className="text-sm sm:text-base font-serif-luxury italic text-[#9F3D5C] font-semibold">
-                  Data Analytics Job Simulation on Forage
-                </p>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                  <Calendar className="w-3 h-3" />
+                  {current.period}
+                </span>
               </div>
 
-              <p className="text-xs sm:text-sm text-[#5C1D2E] leading-relaxed">
-                Industrial telemetry analysis across 4 manufacturing plants and 9 machine types, formulating custom downtime threshold metrics and pay equity models.
+              <h3 className="text-2xl font-extrabold text-slate-900">
+                {current.role}
+              </h3>
+              <p className="text-sm font-semibold text-slate-600">
+                {current.company} · <span className="text-slate-500 font-normal">{current.location}</span>
               </p>
+            </div>
 
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                {['Power BI Analytics', 'JSON Telemetry', 'Downtime Modeling', 'Excel Analytics', 'Pay Equity'].map((s, i) => (
+            {/* What Mansi Did (Bullet points in simple, clear language) */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Key Responsibilities & Deliverables
+              </h4>
+              <div className="space-y-3">
+                {current.description.map((point, pIdx) => (
+                  <div key={pIdx} className="flex items-start gap-3 text-sm text-slate-700 leading-relaxed">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Impact Highlights */}
+            <div className="space-y-3 pt-4 border-t border-slate-100">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Key Outcomes
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {current.deliverables.map((deliv, dIdx) => (
+                  <div key={dIdx} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                    <p className="font-bold text-xs text-slate-900">{deliv.title}</p>
+                    <p className="text-xs text-slate-600 leading-normal">{deliv.impact}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Skills & Tools Used */}
+            <div className="space-y-2 pt-2 border-t border-slate-100">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                Tools & Technologies
+              </span>
+              <div className="flex flex-wrap gap-1.5">
+                {current.skillsUsed.map((skill, sIdx) => (
                   <span
-                    key={i}
-                    className="px-2.5 py-1 rounded-full text-xs font-mono-tech bg-[#FFF8F5] text-[#9F3D5C] border border-[#F7CDD9]"
+                    key={sIdx}
+                    className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors"
                   >
-                    ✓ {s}
+                    {skill}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-[#FFF8F5] rounded-2xl p-6 border border-[#F7CDD9] space-y-4">
-              <div className="text-xs font-mono-tech text-[#9F3D5C] uppercase font-bold tracking-wider">
-                // CORE ANALYTICAL OUTCOMES:
-              </div>
-
-              <ul className="space-y-3">
-                {[
-                  'Evaluated May 2021 JSON telemetry data from 4 factories and 9 machine types to diagnose failure frequency patterns.',
-                  'Engineered a 10-minute "Unhealthy" downtime metric and created an interactive executive dashboard pinpointing highest downtime locations.',
-                  'Classified employee equality scores (-100 to +100) into 3 strategic categories using Microsoft Excel for corporate pay equity analysis.',
-                ].map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#382629] leading-relaxed">
-                    <CheckCircle2 className="w-4 h-4 text-[#9F3D5C] shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
           </div>
+
         </div>
+
       </div>
     </section>
   );

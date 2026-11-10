@@ -17,17 +17,11 @@ export const ScrollProgress: React.FC = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-[#FCE4EC] pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-slate-100 pointer-events-none">
       <div
-        className="h-full bg-gradient-to-r from-[#EFAFC2] via-[#C85B7B] to-[#9F3D5C] transition-all duration-75 relative"
+        className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-75 shadow-xs"
         style={{ width: `${scrollProgress}%` }}
-      >
-        {scrollProgress > 2 && (
-          <span className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 text-[9px] text-[#9F3D5C] select-none font-bold">
-            ✦
-          </span>
-        )}
-      </div>
+      />
     </div>
   );
 };

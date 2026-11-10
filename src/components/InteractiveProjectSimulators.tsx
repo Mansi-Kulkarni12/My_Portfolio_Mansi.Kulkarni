@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { BarChart3, TrendingUp, Users, ShieldAlert, CheckCircle2, Zap, Play, RotateCcw, Filter, Sparkles, Layers } from 'lucide-react';
+import { BarChart3, TrendingUp, Users, ShieldAlert, CheckCircle2, Play, RotateCcw, Activity } from 'lucide-react';
 
 interface HRSimulatorProps {
   compact?: boolean;
@@ -10,7 +10,6 @@ export const HRDashboardSimulator: React.FC<HRSimulatorProps> = ({ compact = fal
   const [selectedDept, setSelectedDept] = useState<'All' | 'Engineering' | 'R&D' | 'Sales' | 'HR'>('All');
   const [overtime, setOvertime] = useState<boolean>(false);
 
-  // Dynamic calculations based on department and overtime
   const getMetrics = () => {
     let baseAttrition = 16.1;
     let baseHeadcount = 1470;
@@ -45,9 +44,8 @@ export const HRDashboardSimulator: React.FC<HRSimulatorProps> = ({ compact = fal
     }
 
     const retention = (100 - baseAttrition).toFixed(1);
-    const riskLevel = baseAttrition > 25 ? 'High Risk' : baseAttrition > 15 ? 'Moderate' : 'Low Risk';
-    const riskColor = baseAttrition > 25 ? '#B91C1C' : baseAttrition > 15 ? '#C85B7B' : '#047857';
-    const riskBg = baseAttrition > 25 ? '#FEF2F2' : baseAttrition > 15 ? '#FFF0F4' : '#ECFDF5';
+    const riskLevel = baseAttrition > 25 ? 'High Risk' : baseAttrition > 15 ? 'Moderate Risk' : 'Healthy Retention';
+    const riskColor = baseAttrition > 25 ? '#B91C1C' : baseAttrition > 15 ? '#7A1E34' : '#1F5F44';
 
     return {
       attrition: baseAttrition.toFixed(1),
@@ -57,27 +55,25 @@ export const HRDashboardSimulator: React.FC<HRSimulatorProps> = ({ compact = fal
       tenure: baseTenure.toFixed(1),
       riskLevel,
       riskColor,
-      riskBg,
     };
   };
 
   const metrics = getMetrics();
 
   return (
-    <div className="rounded-2xl bg-[#FFFFFF] border-2 border-[#EFAFC2]/80 p-4 sm:p-5 shadow-xs space-y-4">
+    <div className="bg-[#FFFFFF] border border-[#E5DFD7] p-5 sm:p-6 space-y-5">
       {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#F7CDD9]">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#E5DFD7]">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] flex items-center justify-center text-[10px] font-bold">
-            1
+          <div className="w-5 h-5 bg-[#181516] text-[#FBF9F5] flex items-center justify-center text-[10px] font-mono-tech font-bold">
+            01
           </div>
           <div>
-            <div className="text-xs font-mono-tech font-bold text-[#382629] flex items-center gap-1.5">
-              <span>EXECUTIVE HR DASHBOARD // LIVE SIMULATOR</span>
-              <Sparkles className="w-3 h-3 text-[#C85B7B]" />
+            <div className="text-xs font-mono-tech font-bold text-[#181516] tracking-wider uppercase">
+              LIVE HR ANALYTICS DASHBOARD SIMULATOR
             </div>
-            <span className="text-[10px] font-mono-tech text-[#9E7D84]">
-              Interactive 1-Screen Power BI Model
+            <span className="text-[10px] font-mono-tech text-[#8C8283]">
+              1-Screen Power BI Model · Interactive DAX Measures
             </span>
           </div>
         </div>
@@ -87,40 +83,40 @@ export const HRDashboardSimulator: React.FC<HRSimulatorProps> = ({ compact = fal
             setSelectedDept('All');
             setOvertime(false);
           }}
-          className="text-[10px] font-mono-tech text-[#9F3D5C] hover:underline flex items-center gap-1 cursor-pointer"
+          className="text-[11px] font-mono-tech text-[#7A1E34] hover:underline flex items-center gap-1 cursor-pointer"
         >
-          <RotateCcw className="w-2.5 h-2.5" />
-          <span>Reset Filters</span>
+          <RotateCcw className="w-3 h-3" />
+          <span>Reset Model</span>
         </button>
       </div>
 
       {/* Filter controls */}
       <div className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-[10px] font-mono-tech uppercase font-bold text-[#9E7D84]">
-            Select Department Filter:
+          <span className="text-[10px] font-mono-tech uppercase font-bold text-[#8C8283]">
+            DEPARTMENT SLICER:
           </span>
           <button
             onClick={() => setOvertime(!overtime)}
-            className={`px-2.5 py-1 rounded-full text-[10px] font-mono-tech font-bold transition-all cursor-pointer border ${
+            className={`px-3 py-1 text-[10px] font-mono-tech uppercase transition-colors cursor-pointer border ${
               overtime
-                ? 'bg-[#B91C1C] text-[#FFF8F5] border-[#991B1B] shadow-2xs'
-                : 'bg-[#FFF8F5] text-[#6B4E54] border-[#F7CDD9] hover:bg-[#FCE4EC]'
+                ? 'bg-[#7A1E34] text-[#FBF9F5] border-[#7A1E34]'
+                : 'bg-[#FBF9F5] text-[#5C5455] border-[#E5DFD7] hover:bg-[#F4EFEA]'
             }`}
           >
-            {overtime ? '✦ OVERTIME ACTIVE (+RISK)' : 'STANDARD HOURS'}
+            {overtime ? 'OVERTIME: ACTIVE (+RISK)' : 'OVERTIME: STANDARD'}
           </button>
         </div>
 
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           {(['All', 'Engineering', 'R&D', 'Sales', 'HR'] as const).map((dept) => (
             <button
               key={dept}
               onClick={() => setSelectedDept(dept)}
-              className={`px-3 py-1 rounded-full text-[11px] font-mono-tech font-medium transition-all cursor-pointer ${
+              className={`px-3 py-1.5 text-xs font-mono-tech transition-colors cursor-pointer border ${
                 selectedDept === dept
-                  ? 'bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] font-bold shadow-2xs'
-                  : 'bg-[#FFF8F5] text-[#5C1D2E] border border-[#F7CDD9] hover:bg-[#FCE4EC]'
+                  ? 'bg-[#181516] text-[#FBF9F5] border-[#181516] font-semibold'
+                  : 'bg-[#FBF9F5] text-[#181516] border-[#E5DFD7] hover:bg-[#F4EFEA]'
               }`}
             >
               {dept}
@@ -130,57 +126,54 @@ export const HRDashboardSimulator: React.FC<HRSimulatorProps> = ({ compact = fal
       </div>
 
       {/* Live Calculated KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">ATTRITION RISK</div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">ATTRITION RATE</div>
           <div
-            className="font-display text-lg sm:text-xl font-bold transition-colors"
+            className="font-display text-xl sm:text-2xl font-bold mt-0.5"
             style={{ color: metrics.riskColor }}
           >
             {metrics.attrition}%
           </div>
-          <span
-            className="inline-block px-1.5 py-0.5 rounded-md text-[8px] font-mono-tech font-bold uppercase mt-0.5"
-            style={{ backgroundColor: metrics.riskBg, color: metrics.riskColor }}
-          >
+          <span className="text-[10px] font-mono-tech text-[#5C5455] uppercase block mt-0.5">
             {metrics.riskLevel}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">RETENTION RATE</div>
-          <div className="font-display text-lg sm:text-xl font-bold text-[#047857]">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">RETENTION RATE</div>
+          <div className="font-display text-xl sm:text-2xl font-bold text-[#1F5F44] mt-0.5">
             {metrics.retention}%
           </div>
-          <span className="text-[9px] font-mono-tech text-[#9E7D84]">Benchmark &gt;80%</span>
+          <span className="text-[10px] font-mono-tech text-[#5C5455] block mt-0.5">&gt;80% Target</span>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">HEADCOUNT</div>
-          <div className="font-display text-lg sm:text-xl font-bold text-[#382629]">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">ACTIVE HEADCOUNT</div>
+          <div className="font-display text-xl sm:text-2xl font-bold text-[#181516] mt-0.5">
             {metrics.headcount}
           </div>
-          <span className="text-[9px] font-mono-tech text-[#9E7D84]">Employees</span>
+          <span className="text-[10px] font-mono-tech text-[#5C5455] block mt-0.5">Employees</span>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">SATISFACTION</div>
-          <div className="font-display text-lg sm:text-xl font-bold text-[#9F3D5C]">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">SATISFACTION INDEX</div>
+          <div className="font-display text-xl sm:text-2xl font-bold text-[#7A1E34] mt-0.5">
             {metrics.satisfaction}/100
           </div>
-          <span className="text-[9px] font-mono-tech text-[#9E7D84]">Avg {metrics.tenure} yrs</span>
+          <span className="text-[10px] font-mono-tech text-[#5C5455] block mt-0.5">Avg {metrics.tenure} yrs</span>
         </div>
       </div>
 
       {/* Visual Animated Retention Bar */}
       <div className="space-y-1.5 pt-1">
-        <div className="flex justify-between text-[10px] font-mono-tech text-[#5C1D2E]">
+        <div className="flex justify-between text-xs font-mono-tech text-[#5C5455]">
           <span>Workforce Retention Baseline</span>
-          <span className="font-bold">{metrics.retention}% Retained</span>
+          <span className="font-semibold text-[#181516]">{metrics.retention}% Retained</span>
         </div>
-        <div className="w-full h-2 rounded-full bg-[#FCE4EC] overflow-hidden">
+        <div className="w-full h-1.5 bg-[#E5DFD7] overflow-hidden">
           <motion.div
-            className="h-full bg-gradient-to-r from-[#C85B7B] to-[#9F3D5C]"
+            className="h-full bg-[#181516]"
             initial={false}
             animate={{ width: `${metrics.retention}%` }}
             transition={{ duration: 0.4 }}
@@ -201,8 +194,7 @@ export const CreditCardSimulator: React.FC = () => {
       churnRate: '4.2%',
       sqlLatency: '11ms',
       status: 'Stable Portfolio',
-      statusColor: '#047857',
-      statusBg: '#ECFDF5',
+      statusColor: '#1F5F44',
       note: 'Balanced utilization with high payment consistency across standard accounts.',
     },
     HighSpender: {
@@ -210,80 +202,76 @@ export const CreditCardSimulator: React.FC = () => {
       avgLimit: '$35,000',
       churnRate: '1.8%',
       sqlLatency: '9ms',
-      status: 'High Net-Worth',
-      statusColor: '#9F3D5C',
-      statusBg: '#FFF0F4',
-      note: 'Premium tier drivers generating 64% of total transaction fee revenue.',
+      status: 'Prime Tier',
+      statusColor: '#7A1E34',
+      note: 'Premium tier accounts driving 64% of total transaction interchange fees.',
     },
     Revolving: {
       utilization: '68.5%',
       avgLimit: '$8,200',
       churnRate: '12.4%',
       sqlLatency: '14ms',
-      status: 'High Interest Margin',
-      statusColor: '#D97706',
-      statusBg: '#FFFBEB',
-      note: 'Significant interest revenue generator; monitored for sudden credit stress.',
+      status: 'Revolver Margin',
+      statusColor: '#A67314',
+      note: 'High net interest margin; monitored via PostgreSQL automated threshold alerts.',
     },
     Delinquent: {
       utilization: '89.2%',
       avgLimit: '$5,500',
       churnRate: '34.8%',
       sqlLatency: '16ms',
-      status: 'Intervention Triggered',
+      status: 'Intervention Required',
       statusColor: '#B91C1C',
-      statusBg: '#FEF2F2',
-      note: 'Early warning flag triggered in PostgreSQL customer intelligence view.',
+      note: 'Early warning trigger flagged in PostgreSQL customer intelligence view.',
     },
   };
 
   const current = segmentData[segment];
 
   return (
-    <div className="rounded-2xl bg-[#FFFFFF] border-2 border-[#EFAFC2]/80 p-4 sm:p-5 shadow-xs space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#F7CDD9]">
+    <div className="bg-[#FFFFFF] border border-[#E5DFD7] p-5 sm:p-6 space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#E5DFD7]">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] flex items-center justify-center text-[10px] font-bold">
-            BI
+          <div className="w-5 h-5 bg-[#181516] text-[#FBF9F5] flex items-center justify-center text-[10px] font-mono-tech font-bold">
+            02
           </div>
           <div>
-            <div className="text-xs font-mono-tech font-bold text-[#382629] flex items-center gap-1.5">
-              <span>CUSTOMER SEGMENT INTELLIGENCE EXPLORER</span>
-              <Sparkles className="w-3 h-3 text-[#C85B7B]" />
+            <div className="text-xs font-mono-tech font-bold text-[#181516] tracking-wider uppercase">
+              POSTGRESQL &amp; POWER BI PORTFOLIO EXPLORER
             </div>
-            <span className="text-[10px] font-mono-tech text-[#9E7D84]">
-              PostgreSQL Schema + Power BI DAX
+            <span className="text-[10px] font-mono-tech text-[#8C8283]">
+              Relational Schema Extraction + DAX Measures
             </span>
           </div>
         </div>
 
         <span
-          className="px-2 py-0.5 rounded-full text-[9px] font-mono-tech font-bold uppercase"
-          style={{ backgroundColor: current.statusBg, color: current.statusColor }}
+          className="text-xs font-mono-tech font-semibold uppercase tracking-wider"
+          style={{ color: current.statusColor }}
         >
-          {current.status}
+          // {current.status}
         </span>
       </div>
 
       {/* Segment Selector */}
       <div className="space-y-1.5">
-        <span className="text-[10px] font-mono-tech uppercase font-bold text-[#9E7D84]">
-          Select Portfolio Risk Segment:
+        <span className="text-[10px] font-mono-tech uppercase font-bold text-[#8C8283]">
+          SELECT RISK SEGMENT:
         </span>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {[
             { key: 'General', label: 'All Accounts' },
-            { key: 'HighSpender', label: 'High Spenders' },
+            { key: 'HighSpender', label: 'Prime Spenders' },
             { key: 'Revolving', label: 'Revolver Debt' },
-            { key: 'Delinquent', label: 'Delinquency' },
+            { key: 'Delinquent', label: 'Delinquency Flag' },
           ].map((item) => (
             <button
               key={item.key}
               onClick={() => setSegment(item.key as any)}
-              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono-tech font-semibold text-center transition-all cursor-pointer ${
+              className={`py-2 px-3 text-xs font-mono-tech text-center transition-colors cursor-pointer border ${
                 segment === item.key
-                  ? 'bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] shadow-2xs'
-                  : 'bg-[#FFF8F5] text-[#5C1D2E] border border-[#F7CDD9] hover:bg-[#FCE4EC]'
+                  ? 'bg-[#181516] text-[#FBF9F5] border-[#181516] font-semibold'
+                  : 'bg-[#FBF9F5] text-[#5C5455] border-[#E5DFD7] hover:bg-[#F4EFEA]'
               }`}
             >
               {item.label}
@@ -293,73 +281,70 @@ export const CreditCardSimulator: React.FC = () => {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">UTILIZATION</div>
-          <div className="font-display text-base sm:text-lg font-bold text-[#382629]">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">UTILIZATION</div>
+          <div className="font-display text-xl font-bold text-[#181516] mt-0.5">
             {current.utilization}
           </div>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">AVG CREDIT LIMIT</div>
-          <div className="font-display text-base sm:text-lg font-bold text-[#9F3D5C]">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">AVG CREDIT LIMIT</div>
+          <div className="font-display text-xl font-bold text-[#7A1E34] mt-0.5">
             {current.avgLimit}
           </div>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">CHURN RISK</div>
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">CHURN PROBABILITY</div>
           <div
-            className="font-display text-base sm:text-lg font-bold"
+            className="font-display text-xl font-bold mt-0.5"
             style={{ color: current.statusColor }}
           >
             {current.churnRate}
           </div>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">SQL QUERY SPEED</div>
-          <div className="font-display text-base sm:text-lg font-bold text-[#047857]">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">SQL QUERY SPEED</div>
+          <div className="font-display text-xl font-bold text-[#1F5F44] mt-0.5">
             {current.sqlLatency}
           </div>
         </div>
       </div>
 
-      <p className="text-[11px] text-[#5C1D2E] bg-[#FFF0F4] p-2.5 rounded-xl border border-[#F7CDD9]">
-        <strong>Insights:</strong> {current.note}
-      </p>
+      <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-xs text-[#5C5455]">
+        <strong className="text-[#181516] font-semibold">Analytical Insights:</strong> {current.note}
+      </div>
     </div>
   );
 };
 
 export const SQLBenchmarkSimulator: React.FC = () => {
   const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [hasRun, setHasRun] = useState<boolean>(true);
   const [mode, setMode] = useState<'optimized' | 'raw'>('optimized');
 
   const handleRun = () => {
     setIsRunning(true);
     setTimeout(() => {
       setIsRunning(false);
-      setHasRun(true);
-    }, 600);
+    }, 550);
   };
 
   return (
-    <div className="rounded-2xl bg-[#FFFFFF] border-2 border-[#EFAFC2]/80 p-4 sm:p-5 shadow-xs space-y-4">
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#F7CDD9]">
+    <div className="bg-[#FFFFFF] border border-[#E5DFD7] p-5 sm:p-6 space-y-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[#E5DFD7]">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] flex items-center justify-center text-[10px] font-bold">
-            SQL
+          <div className="w-5 h-5 bg-[#181516] text-[#FBF9F5] flex items-center justify-center text-[10px] font-mono-tech font-bold">
+            03
           </div>
           <div>
-            <div className="text-xs font-mono-tech font-bold text-[#382629] flex items-center gap-1.5">
-              <span>SQL QUERY OPTIMIZATION BENCHMARK</span>
-              <Sparkles className="w-3 h-3 text-[#C85B7B]" />
+            <div className="text-xs font-mono-tech font-bold text-[#181516] tracking-wider uppercase">
+              SQL QUERY OPTIMIZATION BENCHMARK
             </div>
-            <span className="text-[10px] font-mono-tech text-[#9E7D84]">
-              Healthcare & Bookstore Performance Engine
+            <span className="text-[10px] font-mono-tech text-[#8C8283]">
+              Hospital Patient Visits &amp; Bookstore Sales Optimization
             </span>
           </div>
         </div>
@@ -367,85 +352,79 @@ export const SQLBenchmarkSimulator: React.FC = () => {
         <button
           onClick={handleRun}
           disabled={isRunning}
-          className="px-3 py-1 rounded-full bg-[#9F3D5C] hover:bg-[#822E49] text-[#FFF8F5] text-[10px] font-mono-tech font-bold flex items-center gap-1 cursor-pointer transition-transform active:scale-95 disabled:opacity-50"
+          className="px-3 py-1.5 bg-[#181516] hover:bg-[#7A1E34] text-[#FBF9F5] text-xs font-mono-tech uppercase tracking-wider flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
         >
-          {isRunning ? (
-            <span>Executing...</span>
-          ) : (
-            <>
-              <Play className="w-2.5 h-2.5 fill-current" />
-              <span>Run Execution Test</span>
-            </>
-          )}
+          <Play className="w-3 h-3 fill-current" />
+          <span>{isRunning ? 'EXECUTING...' : 'RUN EXECUTION TEST'}</span>
         </button>
       </div>
 
       {/* Query Mode Switch */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-3">
         <button
           onClick={() => setMode('raw')}
-          className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+          className={`p-3 text-left border transition-colors cursor-pointer ${
             mode === 'raw'
-              ? 'bg-[#FEF2F2] border-[#F87171] text-[#991B1B]'
-              : 'bg-[#FFF8F5] border-[#F7CDD9] text-[#6B4E54] hover:bg-[#FCE4EC]'
+              ? 'bg-[#181516] text-[#FBF9F5] border-[#181516]'
+              : 'bg-[#FBF9F5] text-[#5C5455] border-[#E5DFD7] hover:bg-[#F4EFEA]'
           }`}
         >
-          <div className="text-[10px] font-mono-tech font-bold uppercase">Before Optimization</div>
-          <div className="text-xs font-display font-bold mt-0.5">Raw Nested Subqueries</div>
-          <div className="text-[9px] font-mono-tech text-[#9E7D84] mt-1">Full Table Scan · 20% Errors</div>
+          <div className="text-[10px] font-mono-tech uppercase">PRE-OPTIMIZATION</div>
+          <div className="text-xs font-bold mt-0.5">Nested Correlated Subqueries</div>
+          <div className="text-[10px] font-mono-tech opacity-70 mt-1">Full Table Scan · 20% Errors</div>
         </button>
 
         <button
           onClick={() => setMode('optimized')}
-          className={`p-2.5 rounded-xl text-left border transition-all cursor-pointer ${
+          className={`p-3 text-left border transition-colors cursor-pointer ${
             mode === 'optimized'
-              ? 'bg-[#ECFDF5] border-[#34D399] text-[#065F46]'
-              : 'bg-[#FFF8F5] border-[#F7CDD9] text-[#6B4E54] hover:bg-[#FCE4EC]'
+              ? 'bg-[#181516] text-[#FBF9F5] border-[#181516]'
+              : 'bg-[#FBF9F5] text-[#5C5455] border-[#E5DFD7] hover:bg-[#F4EFEA]'
           }`}
         >
-          <div className="text-[10px] font-mono-tech font-bold uppercase">After Mansi's Tuning</div>
-          <div className="text-xs font-display font-bold mt-0.5">Indexed CTEs & Joins</div>
-          <div className="text-[9px] font-mono-tech text-[#059669] mt-1">B-Tree Indexes · 30% Speedup</div>
+          <div className="text-[10px] font-mono-tech uppercase">AFTER MANSI'S TUNING</div>
+          <div className="text-xs font-bold mt-0.5">Indexed CTEs &amp; Composite Joins</div>
+          <div className="text-[10px] font-mono-tech opacity-70 mt-1">B-Tree Indexes · 30% Speedup</div>
         </button>
       </div>
 
       {/* Result Metrics */}
-      <div className="grid grid-cols-3 gap-2">
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">EXECUTION TIME</div>
+      <div className="grid grid-cols-3 gap-3">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">EXECUTION TIME</div>
           <div
-            className={`font-display text-base sm:text-lg font-bold ${
-              mode === 'optimized' ? 'text-[#047857]' : 'text-[#B91C1C]'
+            className={`font-display text-xl font-bold mt-0.5 ${
+              mode === 'optimized' ? 'text-[#1F5F44]' : 'text-[#B91C1C]'
             }`}
           >
             {mode === 'optimized' ? '85 ms' : '420 ms'}
           </div>
-          <span className="text-[9px] font-mono-tech text-[#9E7D84]">
+          <span className="text-[10px] font-mono-tech text-[#5C5455]">
             {mode === 'optimized' ? '30% Faster' : 'Baseline'}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">ERROR RATE</div>
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">ERROR RATE</div>
           <div
-            className={`font-display text-base sm:text-lg font-bold ${
-              mode === 'optimized' ? 'text-[#047857]' : 'text-[#B91C1C]'
+            className={`font-display text-xl font-bold mt-0.5 ${
+              mode === 'optimized' ? 'text-[#1F5F44]' : 'text-[#B91C1C]'
             }`}
           >
             {mode === 'optimized' ? '0%' : '20%'}
           </div>
-          <span className="text-[9px] font-mono-tech text-[#9E7D84]">
+          <span className="text-[10px] font-mono-tech text-[#5C5455]">
             {mode === 'optimized' ? 'Zero Warnings' : 'Timeout Risks'}
           </span>
         </div>
 
-        <div className="p-2.5 rounded-xl bg-[#FFF8F5] border border-[#F7CDD9] text-center">
-          <div className="text-[9px] font-mono-tech uppercase text-[#9E7D84]">INDEX USAGE</div>
-          <div className="font-display text-base sm:text-lg font-bold text-[#9F3D5C]">
+        <div className="p-3 bg-[#FBF9F5] border border-[#E5DFD7] text-center">
+          <div className="text-[10px] font-mono-tech uppercase text-[#8C8283]">INDEX UTILIZATION</div>
+          <div className="font-display text-xl font-bold text-[#7A1E34] mt-0.5">
             {mode === 'optimized' ? 'B-Tree' : 'None'}
           </div>
-          <span className="text-[9px] font-mono-tech text-[#9E7D84]">
-            {mode === 'optimized' ? 'Composite Keys' : 'Seq Scan'}
+          <span className="text-[10px] font-mono-tech text-[#5C5455]">
+            {mode === 'optimized' ? 'Composite Keys' : 'Sequential Scan'}
           </span>
         </div>
       </div>

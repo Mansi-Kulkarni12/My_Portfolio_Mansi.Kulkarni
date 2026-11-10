@@ -1,201 +1,135 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, ArrowUpRight, FileText, Sparkles } from 'lucide-react';
-import { Sticker, PinkHeart } from './Stickers';
+import { FileText, Menu, X, ArrowUpRight } from 'lucide-react';
 
 interface NavbarProps {
   onOpenResume: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenResume }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-
-      const sections = ['hero', 'about', 'what-i-do', 'experience', 'driskify', 'projects', 'skills', 'education', 'contact'];
-      const scrollPosition = window.scrollY + 200;
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
+      setScrolled(window.scrollY > 20);
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const navLinks = [
-    { label: 'ABOUT', href: '#about', id: 'about' },
-    { label: 'EXPERIENCE', href: '#experience', id: 'experience' },
-    { label: 'WORK', href: '#projects', id: 'projects' },
-    { label: 'SKILLS', href: '#skills', id: 'skills' },
-    { label: 'CONTACT', href: '#contact', id: 'contact' },
+    { label: 'About', href: '#about' },
+    { label: 'Experience', href: '#experience' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Skills', href: '#skills' },
+    { label: 'Certifications', href: '#certifications' },
+    { label: 'Contact', href: '#contact' },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4 transition-all duration-300">
-      <div
-        className={`max-w-7xl mx-auto rounded-full transition-all duration-300 ${
-          isScrolled
-            ? 'glass-panel-blush border border-[#F7CDD9]/90 shadow-md py-2.5 px-4 sm:px-6'
-            : 'bg-[#FFF8F5]/80 backdrop-blur-sm border border-[#F7CDD9]/50 py-3.5 px-4 sm:px-6'
-        }`}
-      >
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-200/80 py-3.5'
+          : 'bg-transparent py-5'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          
-          {/* Brand Logo & Name */}
+          {/* Logo / Name */}
           <a
-            href="#hero"
-            className="flex items-center gap-2 group cursor-pointer"
+            href="#"
+            className="group flex items-center gap-3 text-slate-900 transition-colors"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#9F3D5C] to-[#C85B7B] text-[#FFF8F5] flex items-center justify-center font-syne font-bold text-xs shadow-xs group-hover:scale-105 transition-transform">
-              ✦
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+              MK
             </div>
             <div className="flex flex-col">
-              <div className="flex items-center gap-1">
-                <span className="font-syne font-bold text-xs sm:text-sm tracking-wider text-[#382629] group-hover:text-[#9F3D5C] transition-colors">
-                  MANSI KULKARNI
-                </span>
-                <span className="text-[#C85B7B] text-xs animate-pulse">✦</span>
-              </div>
-              <span className="text-[9px] font-mono-tech text-[#9E7D84] tracking-tight uppercase hidden sm:block">
-                Technology Consultant · ServiceNow GRC
+              <span className="font-bold text-base tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">
+                Mansi Kulkarni
+              </span>
+              <span className="text-xs font-medium text-slate-500 flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                ServiceNow GRC &amp; IRM
               </span>
             </div>
           </a>
 
-          {/* Center Navigation Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
-              return (
-                <a
-                  key={link.id}
-                  href={link.href}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-mono-tech tracking-wider transition-all duration-200 relative ${
-                    isActive
-                      ? 'text-[#5C1D2E] font-bold bg-[#FCE4EC] border border-[#E38FA9]/60 shadow-2xs'
-                      : 'text-[#6B4E54] hover:text-[#382629] hover:bg-[#FDF3EE]'
-                  }`}
-                >
-                  {link.label}
-                  {isActive && (
-                    <span className="absolute -top-1 -right-1 w-1.5 h-1.5 rounded-full bg-[#9F3D5C]" />
-                  )}
-                </a>
-              );
-            })}
+          {/* Desktop Nav Links */}
+          <nav className="hidden lg:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-full border border-slate-200/60 shadow-inner">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="px-3.5 py-1.5 text-xs font-semibold text-slate-600 hover:text-indigo-600 hover:bg-white rounded-full transition-all duration-150"
+              >
+                {link.label}
+              </a>
+            ))}
           </nav>
 
-          {/* Right Action Buttons */}
-          <div className="hidden sm:flex items-center gap-2">
+          {/* Resume CTA & Actions */}
+          <div className="hidden sm:flex items-center gap-3">
             <button
               onClick={onOpenResume}
-              className="px-3.5 py-1.5 rounded-full text-xs font-mono-tech text-[#9F3D5C] bg-[#FFF8F5] hover:bg-[#FCE4EC] border border-[#EFAFC2] transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer hover:scale-102"
-              title="View Verified Resume"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-600/25 hover:shadow-lg hover:shadow-indigo-600/35 hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer"
             >
               <FileText className="w-3.5 h-3.5" />
-              <span>RESUME</span>
+              <span>View Resume</span>
+              <ArrowUpRight className="w-3 h-3 opacity-70" />
             </button>
-
-            <a
-              href="#contact"
-              className="px-4 py-1.5 rounded-full text-xs font-syne font-bold text-[#FFF8F5] bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] hover:from-[#822E49] hover:to-[#B04C6A] transition-all shadow-sm flex items-center gap-1.5 hover:scale-102 active:scale-98"
-            >
-              <span>LET'S TALK</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
           </div>
 
-          {/* Mobile Menu Trigger */}
-          <div className="flex items-center gap-2 md:hidden">
+          {/* Mobile Hamburger Toggle */}
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={onOpenResume}
-              className="p-2 rounded-full bg-[#FCE4EC] text-[#9F3D5C] border border-[#E38FA9] text-xs font-mono-tech"
-              aria-label="View Resume"
+              className="p-2 rounded-lg text-indigo-600 bg-indigo-50 hover:bg-indigo-100 text-xs font-semibold flex items-center gap-1.5"
             >
               <FileText className="w-4 h-4" />
+              <span className="hidden sm:inline">Resume</span>
             </button>
-
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-full bg-[#FDF3EE] hover:bg-[#FCE4EC] text-[#382629] border border-[#F7CDD9] transition-colors"
-              aria-label="Toggle navigation menu"
+              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+              aria-label="Toggle Navigation"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Animated Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden mt-2 p-5 rounded-3xl bg-[#FFF8F5]/95 backdrop-blur-xl border border-[#EFAFC2] shadow-xl space-y-4 max-w-7xl mx-auto"
-          >
-            <div className="flex items-center justify-between pb-3 border-b border-[#F7CDD9]">
-              <div className="flex items-center gap-2">
-                <span className="font-syne font-bold text-sm text-[#382629]">Navigation Menu</span>
-                <PinkHeart size={12} />
-              </div>
-              <Sticker variant="tag">HYDERABAD · 2026</Sticker>
-            </div>
-
-            <nav className="flex flex-col space-y-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.id}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl text-xs font-mono-tech font-semibold text-[#5C1D2E] hover:bg-[#FCE4EC] transition-colors flex items-center justify-between"
-                >
-                  <span>{link.label}</span>
-                  <span className="text-[#E38FA9]">↗</span>
-                </a>
-              ))}
-            </nav>
-
-            <div className="pt-3 border-t border-[#F7CDD9] flex flex-col gap-2">
+      {/* Mobile Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white/95 backdrop-blur-xl border-b border-slate-200 shadow-xl px-4 pt-3 pb-6 animate-in slide-in-from-top-2 duration-200">
+          <nav className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-indigo-600 hover:bg-indigo-50/60 rounded-lg transition-colors flex items-center justify-between"
+              >
+                <span>{link.label}</span>
+                <span className="text-slate-300">→</span>
+              </a>
+            ))}
+            <div className="pt-3 mt-2 border-t border-slate-100">
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
                   onOpenResume();
                 }}
-                className="w-full py-2.5 rounded-full text-xs font-mono-tech text-[#9F3D5C] bg-[#FCE4EC] border border-[#EFAFC2] flex items-center justify-center gap-2 font-bold"
+                className="w-full py-2.5 px-4 rounded-xl text-sm font-semibold bg-indigo-600 text-white flex items-center justify-center gap-2 shadow-md shadow-indigo-600/20"
               >
-                <FileText className="w-3.5 h-3.5" />
-                <span>VIEW VERIFIED RESUME</span>
+                <FileText className="w-4 h-4" />
+                <span>Open Full Resume</span>
               </button>
-
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full py-2.5 rounded-full text-xs font-syne font-bold text-[#FFF8F5] bg-gradient-to-r from-[#9F3D5C] to-[#C85B7B] flex items-center justify-center gap-2 shadow-sm"
-              >
-                <span>LET'S TALK ♡</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
