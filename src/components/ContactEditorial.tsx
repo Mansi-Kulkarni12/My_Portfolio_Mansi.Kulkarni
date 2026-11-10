@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MANSI_PROFILE } from '../data/portfolioData';
-import { Mail, Phone, MapPin, Linkedin, Github, FileText, Send, CheckCircle2, Copy } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, FileText, Send, CheckCircle2, Copy, Loader2, ArrowUpRight } from 'lucide-react';
 
 interface ContactEditorialProps {
   onOpenResume: () => void;
@@ -9,7 +9,9 @@ interface ContactEditorialProps {
 export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [messageSent, setMessageSent] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
 
   const handleCopyEmail = () => {
@@ -24,15 +26,50 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
     setTimeout(() => setCopiedPhone(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
-    setMessageSent(true);
-    setTimeout(() => {
-      setMessageSent(false);
-      setFormData({ name: '', email: '', message: '' });
-    }, 4000);
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      // 1. Submit directly to FormSubmit which emails mansiikulkarnii@gmail.com
+      const response = await fetch('https://formsubmit.co/ajax/mansiikulkarnii@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Message from ${formData.name}`,
+          _replyto: formData.email,
+        }),
+      });
+
+      if (response.ok) {
+        setMessageSent(true);
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        // Fallback: open mail client directly
+        window.location.href = `mailto:${MANSI_PROFILE.email}?subject=Message from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
+        setMessageSent(true);
+      }
+    } catch (err) {
+      // Network fallback: open user's email client
+      window.location.href = `mailto:${MANSI_PROFILE.email}?subject=Message from ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
+      setMessageSent(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const mailtoLink = `mailto:${MANSI_PROFILE.email}?subject=Inquiry from Portfolio&body=Hi Mansi,%0D%0A%0D%0A`;
 
   return (
     <footer id="contact" className="py-20 bg-slate-50 relative">
@@ -45,10 +82,10 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
             <span>Contact Me</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Let's Connect & Collaborate
+            Let's Connect &amp; Collaborate
           </h2>
           <p className="text-base text-slate-600 leading-relaxed">
-            Interested in discussing ServiceNow GRC / IRM opportunities, AI risk platform validation, or data analytics roles? Reach out directly.
+            Interested in discussing ServiceNow GRC / IRM opportunities, risk and compliance workflows, or data analytics roles? Reach out directly.
           </p>
         </div>
 
@@ -94,7 +131,7 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
                 </div>
                 <div className="min-w-0">
                   <span className="text-xs font-bold text-slate-400 uppercase tracking-wide block">
-                    Phone & WhatsApp
+                    Phone &amp; WhatsApp
                   </span>
                   <a
                     href={`tel:${MANSI_PROFILE.phone}`}
@@ -124,7 +161,7 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
                   Location
                 </span>
                 <span className="text-sm font-bold text-slate-900 block">
-                  {MANSI_PROFILE.location} (Open to Remote & Hybrid)
+                  {MANSI_PROFILE.location} (Open to Remote &amp; Hybrid)
                 </span>
               </div>
             </div>
@@ -162,32 +199,63 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
 
           </div>
 
-          {/* Right Column: Interactive Quick Inquiry Form */}
+          {/* Right Column: Direct Email Delivery Form */}
           <div className="lg:col-span-7 bg-white rounded-3xl p-7 sm:p-9 border border-slate-200/90 shadow-xl">
-            <h3 className="text-xl font-extrabold text-slate-900 mb-1">
-              Send a Direct Message
-            </h3>
-            <p className="text-xs text-slate-500 mb-6">
-              Drop a note and I will get back to you promptly.
-            </p>
-
-            {messageSent ? (
-              <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2 animate-in fade-in duration-300">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-                <h4 className="font-extrabold text-slate-900 text-base">Message Received!</h4>
-                <p className="text-xs text-slate-600">
-                  Thank you for reaching out. You can also contact me directly at {MANSI_PROFILE.email}.
+            <div className="flex items-start justify-between gap-4 mb-2">
+              <div>
+                <h3 className="text-xl font-extrabold text-slate-900">
+                  Send a Direct Message
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Messages submitted here are sent directly to <strong className="text-slate-700 font-semibold">{MANSI_PROFILE.email}</strong>.
                 </p>
               </div>
+              <a
+                href={mailtoLink}
+                className="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline shrink-0"
+              >
+                <span>Open in Email App</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            {messageSent ? (
+              <div className="p-8 my-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3 animate-in fade-in duration-300">
+                <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
+                <h4 className="font-extrabold text-slate-900 text-lg">Message Sent to Mansi's Inbox!</h4>
+                <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                  Your message, name, and email address have been sent directly to <strong>{MANSI_PROFILE.email}</strong>. Mansi will reply to your email address shortly.
+                </p>
+                <button
+                  onClick={() => setMessageSent(false)}
+                  className="mt-2 px-4 py-2 text-xs font-bold text-emerald-700 bg-emerald-100 hover:bg-emerald-200 rounded-xl transition-colors cursor-pointer"
+                >
+                  Send Another Note
+                </button>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form 
+                onSubmit={handleSubmit}
+                action="https://formsubmit.co/mansiikulkarnii@gmail.com"
+                method="POST"
+                name="contact"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                className="space-y-4 mt-6"
+              >
+                {/* Netlify & FormSubmit hidden inputs */}
+                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5">
-                      Your Name
+                      Your Name <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="text"
+                      name="name"
                       required
                       placeholder="e.g. Alex Smith"
                       value={formData.name}
@@ -197,10 +265,11 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
                   </div>
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5">
-                      Email Address
+                      Your Email Address <span className="text-rose-500">*</span>
                     </label>
                     <input
                       type="email"
+                      name="email"
                       required
                       placeholder="alex@company.com"
                       value={formData.email}
@@ -212,10 +281,11 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 uppercase tracking-wide mb-1.5">
-                    Message
+                    Your Message <span className="text-rose-500">*</span>
                   </label>
                   <textarea
                     rows={4}
+                    name="message"
                     required
                     placeholder="Hi Mansi, I would love to connect regarding..."
                     value={formData.message}
@@ -224,13 +294,33 @@ export const ContactEditorial: React.FC<ContactEditorialProps> = ({ onOpenResume
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-3 px-6 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/25 transition-all cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Send Message</span>
-                </button>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/25 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-60"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending to Mansi's Email...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Send to Mansi's Email</span>
+                      </>
+                    )}
+                  </button>
+
+                  <a
+                    href={mailtoLink}
+                    className="text-xs text-slate-500 hover:text-indigo-600 transition-colors flex items-center gap-1"
+                  >
+                    <span>Prefer direct mail? Click here</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </a>
+                </div>
               </form>
             )}
           </div>
